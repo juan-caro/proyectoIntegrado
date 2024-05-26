@@ -1,18 +1,19 @@
-import { TorneosIndex } from "../../torneos/TorneosIndex"
-import { Navbar } from "../components/Navbar"
-import { SideNavbar } from "../components/SideNavbar"
+import React from 'react'
+import { RegisterUser } from '../../users/RegisterUser';
+import { Navbar } from '../components/Navbar';
+import { SideNavbar } from '../components/SideNavbar';
 
-export const LayoutTorneosIndex = ({ isLoggedIn, userLogged }) => {
+export const LayoutRegisterUser = ({ isLoggedIn, handleLogin, userLogged, setUserLogged }) => {
     return (
         <>
             <Navbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
             <div id="layoutSidenav">
                 <div id="layoutSidenav_nav">
-                    <SideNavbar />
+                    <SideNavbar/>
                 </div>
                 <div id="layoutSidenav_content" className="bg-white-to-green">
                     <main className="mb-0">
-                        <TorneosIndex />
+                        <RegisterUser handleLogin={handleLogin} setUserLogged={setUserLogged} />
                     </main>
                     <footer className="custom-bg-dark text-white">
                         <div className="custom-bg-dark">

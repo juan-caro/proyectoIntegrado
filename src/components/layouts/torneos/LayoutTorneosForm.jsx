@@ -2,10 +2,10 @@ import { TorneosForm } from "../../torneos/TorneosForm"
 import { Navbar } from "../components/Navbar"
 import { SideNavbar } from "../components/SideNavbar"
 
-export const LayoutTorneosForm = () => {
+export const LayoutTorneosForm = ({ isLoggedIn, userLogged }) => {
     return (
         <>
-            <Navbar />
+            <Navbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
             <div id="layoutSidenav">
                 <div id="layoutSidenav_nav">
                     <SideNavbar />

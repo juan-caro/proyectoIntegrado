@@ -2,13 +2,13 @@ import { Dashboard } from "../Dashboard"
 import { Navbar } from "./components/Navbar"
 import { SideNavbar } from "./components/SideNavbar"
 
-export const LayoutDashboard = () => {
+export const LayoutDashboard = ({isLoggedIn, userLogged}) => {
   return (
     <>
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
-                <SideNavbar />
+                <SideNavbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
             </div>
             <div id="layoutSidenav_content" className="bg-white-to-green">
                 <main className="mb-0">

@@ -1,6 +1,34 @@
+import { useEffect, useState } from "react";
 
 export const TorneosIndex = () => {
-  return (
+  
+    const [tournaments, setTournaments] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchTournaments = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/tournaments?page=0&size=10');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setTournaments(data.content);
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+
+        fetchTournaments();
+    }, []);
+
+    if (error) {
+        return <div>Error fetching tournaments: {error}</div>;
+    }
+
+
+  
+    return (
 
     <>
         <div className="container-fluid px-4">
@@ -22,21 +50,46 @@ export const TorneosIndex = () => {
                         <thead>
                             <tr>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Código</th>
-                                <th className="d-flex justify-content-end">Acciones</th>
+                                <th scope="col">Fecha</th>
+                                <th>Formato</th>
+                                <th>Estado</th>
+                                <th>Rondas</th>
+                                <th className="d-flex justify-content-end">Ver detalles</th>
 
                             </tr>
                         </thead>
+                        <tbody>
+                            {tournaments.length === 0 ? (
+                                <tr>
+                                    <td colSpan="5">No tournaments available</td>
+                                </tr>
+                            ) : (
+                                tournaments.map(tournament => (
+                                    <tr key={tournament.id}>
+                                        <td>{tournament.name}</td>
+                                        <td>{tournament.dateTime}</td>
+                                        <td>{tournament.format}</td>
+                                        <td>{tournament.state}</td>
+                                        <td>{tournament.rounds}</td>
+                                        <td>
+                                            <a className="btn btn-primary btn-sm d-flex float-end" href="#">
+                                                Ver detalles
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
                         <tfoot>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Código</th>
-                                <th className="d-flex justify-content-end">Acciones</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Fecha</th>
+                                <th>Formato</th>
+                                <th>Estado</th>
+                                <th>Rondas</th>
+                                <th className="d-flex justify-content-end">Ver detalles</th>
                             </tr>
                         </tfoot>
-                        <tbody>
-                        
-                        </tbody>
                     </table>
 
                 </div>
