@@ -1,8 +1,12 @@
-import { TorneosIndex } from "../../torneos/TorneosIndex"
-import { Navbar } from "../components/Navbar"
-import { SideNavbar } from "../components/SideNavbar"
+import React from 'react'
+import { Navbar } from '../components/Navbar'
+import { SideNavbar } from '../components/SideNavbar'
+import { TorneosDetails } from '../../torneos/TorneosDetails'
+import { useLocation } from "react-router-dom";
 
-export const LayoutTorneosIndex = ({ isLoggedIn, userLogged }) => {
+export const LayoutTorneosDetails = ({ isLoggedIn, userLogged }) => {
+    const { state } = useLocation();
+    const { tournament } = state;
     return (
         <>
             <Navbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
@@ -12,7 +16,7 @@ export const LayoutTorneosIndex = ({ isLoggedIn, userLogged }) => {
                 </div>
                 <div id="layoutSidenav_content" className="bg-white-to-green">
                     <main className="mb-0">
-                        <TorneosIndex />
+                        <TorneosDetails tournament={tournament} />
                     </main>
                     <footer className="custom-bg-dark text-white">
                         <div className="custom-bg-dark">

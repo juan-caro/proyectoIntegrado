@@ -5,7 +5,10 @@ import { LayoutTorneosForm } from "../components/layouts/torneos/LayoutTorneosFo
 import { LayoutRegisterUser } from "../components/layouts/users/LayoutRegisterUser"
 import { LayoutLoginUser } from "../components/layouts/users/LayoutLoginUser"
 import { LogoutUser } from "../components/users/LogoutUser"
-export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, setUserLogged }) => {
+import { LayoutTorneosDetails } from "../components/layouts/torneos/LayoutTorneosDetails"
+
+export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, setUserLogged}) => {
+    
     return (
         <>
             <Routes>
@@ -16,6 +19,7 @@ export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, s
                 <Route path="/register" element={ <LayoutRegisterUser isLoggedIn={isLoggedIn} userLogged={userLogged} handleLogin={handleLogin} setUserLogged={setUserLogged}/> } />
                 <Route path="/login" element={<LayoutLoginUser handleLogin={handleLogin} setUserLogged={setUserLogged} />} />
                 <Route path="/logout" element={<LogoutUser handleLogout={handleLogout}/>} />
+                <Route path="/torneos/details" element={<LayoutTorneosDetails isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
             </Routes>
         </>
     )

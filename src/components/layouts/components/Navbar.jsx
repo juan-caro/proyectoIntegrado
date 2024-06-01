@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 export const Navbar = ({isLoggedIn, userLogged}) => {
   return (
@@ -19,13 +20,13 @@ export const Navbar = ({isLoggedIn, userLogged}) => {
                             <li><h5 className="dropdown-item">{userLogged.username}</h5></li>
                             <li><a className="dropdown-item" href="#!">Perfil</a></li>
                             <li><hr className="dropdown-divider" /></li>
-                            <li><a className="dropdown-item" href="/logout">Cerrar Sesión</a></li>
+                            <li><Link className="dropdown-item" to={{ pathname: '/logout'}}>Cerrar Sesión</Link></li>
                         </>
                         : 
                         <>
-                            <li><a className="dropdown-item" href="/login">Iniciar Sesión</a></li>
+                            <li><Link className="dropdown-item" to={{ pathname: '/login'}}>Iniciar Sesión</Link></li>
                             <li><hr className="dropdown-divider" /></li>
-                            <li><a className="dropdown-item" href="/register">Registrarse</a></li>
+                            <li><Link className="dropdown-item" to={{ pathname: '/register'}}>Registrarse</Link></li>
                         </>
                         }
                     </ul>

@@ -8,11 +8,11 @@ export const LayoutTorneosForm = ({ isLoggedIn, userLogged }) => {
             <Navbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
             <div id="layoutSidenav">
                 <div id="layoutSidenav_nav">
-                    <SideNavbar />
+                    <SideNavbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
                 </div>
                 <div id="layoutSidenav_content" className="bg-white-to-green">
                     <main className="mb-0">
-                        <TorneosForm />
+                        <TorneosForm userLogged={userLogged}/>
                     </main>
                     <footer className="custom-bg-dark text-white">
                         <div className="custom-bg-dark">

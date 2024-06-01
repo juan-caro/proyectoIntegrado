@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const TorneosIndex = () => {
   
     const [tournaments, setTournaments] = useState([]);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTournaments = async () => {
@@ -21,6 +23,11 @@ export const TorneosIndex = () => {
 
         fetchTournaments();
     }, []);
+
+    const handleDetails = (tournament) => {
+        navigate('/torneos/details', { state: { tournament } });
+    };
+
 
     if (error) {
         return <div>Error fetching tournaments: {error}</div>;
@@ -50,7 +57,7 @@ export const TorneosIndex = () => {
                         <thead>
                             <tr>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Fecha</th>
+                                <th scope="col">Fecha y Hora</th>
                                 <th>Formato</th>
                                 <th>Estado</th>
                                 <th>Rondas</th>
@@ -67,14 +74,17 @@ export const TorneosIndex = () => {
                                 tournaments.map(tournament => (
                                     <tr key={tournament.id}>
                                         <td>{tournament.name}</td>
-                                        <td>{tournament.dateTime}</td>
+                                        <td>{new Date(tournament.dateTime).toLocaleString()}</td>
                                         <td>{tournament.format}</td>
                                         <td>{tournament.state}</td>
                                         <td>{tournament.rounds}</td>
                                         <td>
-                                            <a className="btn btn-primary btn-sm d-flex float-end" href="#">
+                                            <button
+                                                className="btn btn-primary btn-sm d-flex float-end"
+                                                onClick={() => handleDetails(tournament)}
+                                            >
                                                 Ver detalles
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
@@ -83,7 +93,7 @@ export const TorneosIndex = () => {
                         <tfoot>
                             <tr>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Fecha</th>
+                                <th scope="col">Fecha y Hora</th>
                                 <th>Formato</th>
                                 <th>Estado</th>
                                 <th>Rondas</th>

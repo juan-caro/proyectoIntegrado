@@ -22,6 +22,8 @@ export const ChessTournamentsApp = () => {
       isAuth: true,
       userLogged: user,
     }));
+
+    console.log(user);
   };
 
   const handleLogout = () => {

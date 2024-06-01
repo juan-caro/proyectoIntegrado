@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CryptoJS from 'crypto-js';
 
 export const LoginUser = ({ handleLogin, setUserLogged }) => {
   const [username, setUsername] = useState('');
@@ -8,7 +9,24 @@ export const LoginUser = ({ handleLogin, setUserLogged }) => {
 
   const navigate = useNavigate();
 
+  // Función para cifrar una contraseña
+  const encryptPassword = (password) => {
+      const ciphertext = CryptoJS.AES.encrypt(password, 'secret').toString(); // Cifra la contraseña usando una clave secreta
+      return ciphertext;
+  };
+
+  // Función para descifrar la contraseña (si es necesario)
+  const decryptPassword = (ciphertext) => {
+      const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret');
+      const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+      return originalPassword;
+  };
+
   const handleLoginClick = async () => {
+
+    const encryptedPassword = encryptPassword(password);
+    console.log(encryptPassword);
+    setPassword(encryptedPassword);
     const response = await fetch('http://localhost:8080/auth/login', {
       method: 'POST',
       headers: {
