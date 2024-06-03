@@ -6,6 +6,8 @@ import { LayoutRegisterUser } from "../components/layouts/users/LayoutRegisterUs
 import { LayoutLoginUser } from "../components/layouts/users/LayoutLoginUser"
 import { LogoutUser } from "../components/users/LogoutUser"
 import { LayoutTorneosDetails } from "../components/layouts/torneos/LayoutTorneosDetails"
+import { LayoutTorneosUser } from "../components/layouts/users/LayoutTorneosUser"
+import { LayoutUserProfile } from "../components/layouts/users/LayoutUserProfile"
 
 export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, setUserLogged}) => {
     
@@ -20,6 +22,8 @@ export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, s
                 <Route path="/login" element={<LayoutLoginUser handleLogin={handleLogin} setUserLogged={setUserLogged} />} />
                 <Route path="/logout" element={<LogoutUser handleLogout={handleLogout}/>} />
                 <Route path="/torneos/details" element={<LayoutTorneosDetails isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
+                <Route path="/mistorneos" element={<LayoutTorneosUser isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
+                <Route path="/miperfil" element={<LayoutUserProfile isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
             </Routes>
         </>
     )

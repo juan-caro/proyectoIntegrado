@@ -5,7 +5,7 @@ export const Navbar = ({isLoggedIn, userLogged}) => {
     <>
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             {/* <!-- Navbar Brand--> */}
-            <a className="navbar-brand ps-3" href="index.html">Chess Tournaments</a>
+            <Link className="navbar-brand ps-3" to={{ pathname: '/'}}>Chess Tournaments</Link>
             
             {/* <!-- Navbar Search--> */}
             

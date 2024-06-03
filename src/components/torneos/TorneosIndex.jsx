@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 export const TorneosIndex = () => {
   
     const [tournaments, setTournaments] = useState([]);
@@ -44,9 +45,6 @@ export const TorneosIndex = () => {
             <ol className="breadcrumb mb-4">
                 <li className="breadcrumb-item active">Torneos</li>
             </ol>
-            <div>
-                <a href="/salazoom/create" className="btn btn-success mb-4 fs-6"> + Nueva Sala </a>
-            </div>
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fas fa-crown me-1"></i>

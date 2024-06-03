@@ -22,14 +22,14 @@ export const SideNavbar = ({isLoggedIn, userLogged}) => {
             Organizar nuevo torneo
         </Link>
         <div className="sb-sidenav-menu-heading">Mi espacio</div>
-        <a className="nav-link" href="/torneos">
+        <Link className="nav-link" to={{ pathname: '/miperfil'}}>
           <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
           Mi perfil
-        </a>
-        <a className="nav-link" href="/torneos/create">
+        </Link>
+        <Link className="nav-link" to={{ pathname: '/mistorneos'}}>
           <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
           Mis torneos
-        </a>
+        </Link>
       </div>
     </div>
     <SideNavbarFooter />

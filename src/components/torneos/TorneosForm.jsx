@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const TorneosForm = ({userLogged}) => {
     const [name, setName] = useState('');
@@ -10,6 +11,14 @@ export const TorneosForm = ({userLogged}) => {
     const [rounds, setRounds] = useState('');
     const [file, setFile] = useState(null);
     const navigate = useNavigate();
+
+    const showSwal = () => {
+        Swal.fire({
+            title: "Torneo Creado!",
+            text: "El torneo se ha creado con éxito.",
+            icon: "success"
+          });
+    }
 
     console.log(userLogged.id);
 
@@ -55,7 +64,9 @@ export const TorneosForm = ({userLogged}) => {
         setState('');
         setRounds('');
         setFile(null);
+        showSwal();
 
+        
         navigate('/torneos');
         } catch (error) {
         console.error('Error adding tournament:', error);

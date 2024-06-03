@@ -24,6 +24,7 @@ export const LoginUser = ({ handleLogin, setUserLogged }) => {
 
   const handleLoginClick = async () => {
 
+    const decryptedPassword = password;
     const encryptedPassword = encryptPassword(password);
     console.log(encryptPassword);
     setPassword(encryptedPassword);
@@ -42,7 +43,8 @@ export const LoginUser = ({ handleLogin, setUserLogged }) => {
       setUserLogged(user);
       navigate('/');
     } else {
-      setErrorMessage('Invalid credentials');
+      setPassword(decryptedPassword);
+      setErrorMessage('Credenciales incorrectas');
     }
   };
 

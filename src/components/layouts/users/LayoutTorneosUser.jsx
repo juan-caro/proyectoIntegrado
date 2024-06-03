@@ -1,22 +1,19 @@
 import React from 'react'
-import { Navbar } from '../components/Navbar'
-import { SideNavbar } from '../components/SideNavbar'
-import { TorneosDetails } from '../../torneos/TorneosDetails'
-import { useLocation } from "react-router-dom";
+import { TorneosUser } from '../../users/TorneosUser';
+import { Navbar } from '../components/Navbar';
+import { SideNavbar } from '../components/SideNavbar';
 
-export const LayoutTorneosDetails = ({ isLoggedIn, userLogged }) => {
-    const { state } = useLocation();
-    const { tournament } = state;
+export const LayoutTorneosUser = ({ isLoggedIn, userLogged }) => {
     return (
         <>
             <Navbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
             <div id="layoutSidenav">
                 <div id="layoutSidenav_nav">
-                    <SideNavbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
+                    <SideNavbar/>
                 </div>
                 <div id="layoutSidenav_content" className="bg-white-to-green">
                     <main className="mb-0">
-                        <TorneosDetails tournament={tournament} user={userLogged}/>
+                        <TorneosUser userLogged={userLogged} />
                     </main>
                     <footer className="custom-bg-dark text-white">
                         <div className="custom-bg-dark">

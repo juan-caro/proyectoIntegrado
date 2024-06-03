@@ -1,5 +1,23 @@
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 export const Dashboard = () => {
+
+    const [tournaments, setTournaments] = useState([]);
+
+  useEffect(() => {
+    const fetchTournaments = async () => {
+      try {
+        const response = await axios.get('/tournaments/recent');
+        setTournaments(response.data);
+        console.log("response: " + response.data);
+      } catch (error) {
+        console.error('Error fetching recent tournaments', error);
+      }
+    };
+    fetchTournaments();
+  }, []);
+
   return (
     <>
         <div className="container-fluid px-4">
@@ -11,9 +29,11 @@ export const Dashboard = () => {
             <div className="card border-primary mb-3 ">
                 <h5 className="card-header text-bg-primary">Torneos más próximos</h5>
                 <div className="card-body">
-                    <p className="card-text">Torneo 1 Fecha: 14/04/2024 Hora: 17:30</p>
-                    <p className="card-text">Torneo 2 Fecha: 15/04/2024 Hora: 16:30</p>
-                    <p className="card-text">Torneo 3 Fecha: 23/04/2024 Hora: 18:30</p>
+                {tournaments.map((tournament, index) => (
+                    <p key={index} className="card-text">
+                        {tournament.name} Fecha: {new Date(tournament.dateTime).toLocaleDateString()} Hora: {new Date(tournament.dateTime).toLocaleTimeString()}
+                    </p>
+                ))}
                 </div>
             </div>
 
