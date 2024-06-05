@@ -81,4 +81,7 @@ public class TournamentService {
     public List<Tournament> getTournamentsByUserId(String userId) {
         return tournamentRepo.findByCreatorId(userId);
     }
+    public List<Tournament> getRecentTournaments() {
+        return tournamentRepo.findTop3ByOrderByDateTimeDesc();
+    }
 }

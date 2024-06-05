@@ -5,6 +5,7 @@ import com.example.chesstournaments.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import com.example.chesstournaments.models.Tournament;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.chesstournaments.services.TournamentService;
@@ -15,6 +16,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
@@ -72,5 +74,11 @@ public class TournamentController {
     @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
     public byte[] getPhoto(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<Tournament>> getRecentTournaments() {
+        List<Tournament> tournaments = tournamentService.getRecentTournaments();
+        return new ResponseEntity<>(tournaments, HttpStatus.OK);
     }
 }

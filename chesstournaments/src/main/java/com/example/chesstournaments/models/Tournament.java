@@ -1,5 +1,6 @@
 package com.example.chesstournaments.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,12 +40,15 @@ public class Tournament {
     private String iconUrl;
 
     @OneToMany(mappedBy = "tournament")
+    @JsonBackReference
     private List<Participation> participations;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = true)
+    @JsonBackReference
     private User creator;
 
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Game> games;
 }

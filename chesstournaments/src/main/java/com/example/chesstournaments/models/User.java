@@ -3,6 +3,7 @@ package com.example.chesstournaments.models;
  * @author: Juan Cabello Rodríguez
  * */
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,8 +46,12 @@ public class User {
     @OneToOne(mappedBy = "creator", cascade = CascadeType.ALL)
     private Club createdClub;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Participation> participations;
-    @OneToOne(mappedBy = "creator", cascade = CascadeType.ALL)
-    private Club createdTournament;
+    @OneToMany(mappedBy = "creator")
+    @JsonManagedReference
+    private List<Tournament> createdTournaments;
+
+
 
 }
