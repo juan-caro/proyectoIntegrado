@@ -41,21 +41,18 @@ export const TorneosForm = ({userLogged}) => {
 
         console.log("Creado");
 
-        let iconUrl = '';
-
         if (file) {
     
             const formData = new FormData();
             formData.append('id', tournamentId);
             formData.append('file', file);
 
-            const uploadResponse = await axios.put('http://localhost:8080/tournaments/photo', formData, {
+            await axios.put('http://localhost:8080/tournaments/photo', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
             });
 
-            iconUrl = uploadResponse.data; 
         }
 
         setName('');

@@ -17,11 +17,11 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
     };
     
     
-    const decryptPassword = (ciphertext) => {
-        const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret');
-        const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-        return originalPassword;
-    };
+    // const decryptPassword = (ciphertext) => {
+    //     const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret');
+    //     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+    //     return originalPassword;
+    // };
   
   const handleRegister = async () => {
     event.preventDefault();

@@ -15,7 +15,7 @@ export const ChessTournamentsApp = () => {
   const navigate = useNavigate();
 
   const handleLogin = (user) => {
-    console.log(user);
+    console.log("user: " + user);
     setIsLoggedIn(true);
     setUserLogged(user);
     sessionStorage.setItem('login', JSON.stringify({
@@ -23,7 +23,7 @@ export const ChessTournamentsApp = () => {
       userLogged: user,
     }));
 
-    console.log(user);
+    console.log("userLogged: " + userLogged);
   };
 
   const handleLogout = () => {

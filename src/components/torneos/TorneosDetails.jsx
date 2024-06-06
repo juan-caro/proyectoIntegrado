@@ -61,10 +61,10 @@ export const TorneosDetails = ({ tournament, user }) => {
                                 src={tournament.iconUrl}
                                 alt="Torneo Icon"
                                 className="img-fluid"
-                                style={{ maxWidth: "8%", height: "auto" }}
+                                style={{ maxWidth: "100%", height: "10%", width: "10%", borderRadius: "60%" }}
                             />
                         )}
-                        <h5 className="card-title mt-5">{tournament.name}</h5>
+                        <h5 className="card-title ms-3">{tournament.name}</h5>
                     </div>
                 </div>
                 <div className="card-body">
