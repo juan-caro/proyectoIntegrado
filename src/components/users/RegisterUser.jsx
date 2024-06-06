@@ -29,7 +29,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
         setErrorMessage('Las contraseñas no coinciden');
         return;
       }
-
+      const decryptedPassword = password;
       const encryptedPassword = encryptPassword(password);
       console.log(encryptedPassword);
       setPassword(encryptedPassword);
@@ -53,12 +53,14 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
 
         if(responseLogin.ok){
             const user = await response.json();
+            console.log(user);
             handleLogin(user);
             setUserLogged(user);
             navigate('/');
         }
       
     } else {
+     setPassword(decryptedPassword);
       console.error('Error en el registro');
     }
   };

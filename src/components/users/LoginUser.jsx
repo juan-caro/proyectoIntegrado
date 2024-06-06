@@ -38,8 +38,9 @@ export const LoginUser = ({ handleLogin, setUserLogged }) => {
     });
 
     if (response.ok) {
+
       const user = await response.json();
-      console.log("response ok: " + user);
+      console.log(response.json());
       handleLogin(user);
       setUserLogged(user);
       navigate('/');

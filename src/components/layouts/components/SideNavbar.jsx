@@ -30,6 +30,15 @@ export const SideNavbar = ({isLoggedIn, userLogged}) => {
           <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
           Mis torneos
         </Link>
+        <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-person me-2"></i>Clubs</div>
+        <Link className="nav-link" to={{ pathname: '/clubs'}}>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-id-card"></i></div>
+          Lista de clubs
+        </Link>
+        <Link className="nav-link" to={{ pathname: '/clubs/create'}}>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
+          Fundar un nuevo club
+        </Link>
       </div>
     </div>
     <SideNavbarFooter />
