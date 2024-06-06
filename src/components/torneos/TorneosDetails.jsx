@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export const TorneosDetails = ({ tournament, user }) => {
+export const TorneosDetails = ({ tournament, user, isLoggedIn}) => {
     const [isRegistered, setIsRegistered] = useState(false);
-
     useEffect(() => {
         // Verificar si el usuario ya está inscrito
         const checkRegistration = async () => {
@@ -82,10 +82,18 @@ export const TorneosDetails = ({ tournament, user }) => {
                         <p className="card-text">Estado: {tournament.state}</p>
                         <p className="card-text">Rondas: {tournament.rounds}</p>
                     </div>
-                    {isRegistered ? (
-                        <button className='btn btn-danger' onClick={handleUnregister}>Cancelar Inscripción</button>
+                    
+                    
+                </div>
+                <div className='card-footer'>
+                {isLoggedIn ? (
+                        isRegistered ? (
+                            <button className='btn btn-danger' onClick={handleUnregister}>Cancelar Inscripción</button>
+                        ) : (
+                            <button className='btn btn-primary' onClick={handleRegister}>Inscribirse</button>
+                        )
                     ) : (
-                        <button className='btn btn-primary' onClick={handleRegister}>Inscribirse</button>
+                        <p>Para inscribirse, por favor <Link to={{ pathname: '/login'}}>inicie sesión.</Link></p>
                     )}
                 </div>
             </div>

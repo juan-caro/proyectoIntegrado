@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Navbar } from '../components/Navbar';
 import { SideNavbar } from '../components/SideNavbar';
 import { UserProfile } from '../../users/UserProfile';
+import { useNavigate } from 'react-router-dom';
 
 export const LayoutUserProfile = ({ isLoggedIn, userLogged }) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+          navigate('/login');
+        }
+      }, [isLoggedIn, navigate]);
     return (
         <>
             <Navbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>

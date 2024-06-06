@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CryptoJS from 'crypto-js';
 
 export const RegisterUser = ({ handleLogin, setUserLogged }) => {
@@ -108,6 +108,9 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
                                     <div className="d-grid"> <button type="submit" className='btn btn-primary btn-block' onClick={handleRegister}>Registrarse</button></div>
                                 </div>
                             </form>
+                        </div>
+                        <div className='card-footer'>
+                            ¿Ya tienes cuenta? <Link to={{ pathname: '/login'}}>Inicia sesión</Link>
                         </div>
                     </div>
                 </div>

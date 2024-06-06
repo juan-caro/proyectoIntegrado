@@ -16,7 +16,7 @@ export const LayoutTorneosDetails = ({ isLoggedIn, userLogged }) => {
                 </div>
                 <div id="layoutSidenav_content" className="bg-white-to-green">
                     <main className="mb-0">
-                        <TorneosDetails tournament={tournament} user={userLogged}/>
+                        <TorneosDetails tournament={tournament} user={userLogged} isLoggedIn={isLoggedIn}/>
                     </main>
                     <footer className="custom-bg-dark text-white">
                         <div className="custom-bg-dark">

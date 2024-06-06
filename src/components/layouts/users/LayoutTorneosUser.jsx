@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TorneosUser } from '../../users/TorneosUser';
 import { Navbar } from '../components/Navbar';
 import { SideNavbar } from '../components/SideNavbar';
+import { useNavigate } from 'react-router-dom';
 
 export const LayoutTorneosUser = ({ isLoggedIn, userLogged }) => {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+          navigate('/login');
+        }
+      }, [isLoggedIn, navigate]);
+
     return (
         <>
             <Navbar isLoggedIn={isLoggedIn} userLogged={userLogged}/>
@@ -13,7 +23,7 @@ export const LayoutTorneosUser = ({ isLoggedIn, userLogged }) => {
                 </div>
                 <div id="layoutSidenav_content" className="bg-white-to-green">
                     <main className="mb-0">
-                        <TorneosUser userLogged={userLogged} />
+                        <TorneosUser userLogged={userLogged} isLoggedIn={isLoggedIn} />
                     </main>
                     <footer className="custom-bg-dark text-white">
                         <div className="custom-bg-dark">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CryptoJS from 'crypto-js';
+import { Link } from 'react-router-dom';
 
 export const LoginUser = ({ handleLogin, setUserLogged }) => {
   const [username, setUsername] = useState('');
@@ -66,9 +67,12 @@ export const LoginUser = ({ handleLogin, setUserLogged }) => {
                 </div>
                 {errorMessage && <div className="text-danger">{errorMessage}</div>}
                 <div className="d-grid">
-                  <button type="submit" className="btn btn-primary btn-block">Login</button>
+                  <button type="submit" className="btn btn-primary btn-block">Iniciar Sesión</button>
                 </div>
               </form>
+            </div>
+            <div className='card-footer'>
+                ¿No tienes cuenta? <Link to={{ pathname: '/register'}}>Regístrate aquí</Link>
             </div>
           </div>
         </div>
