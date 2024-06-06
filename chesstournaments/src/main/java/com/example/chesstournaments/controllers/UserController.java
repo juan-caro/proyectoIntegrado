@@ -20,7 +20,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    public static final String PHOTO_DIRECTORY =  "C:\\Users\\johnm\\OneDrive\\Documentos\\Springboot\\chesstournaments\\users\\image\\";
+    public static final String PHOTO_DIRECTORY =  "C:\\Users\\Morius\\OneDrive\\Documentos\\Springboot\\chesstournaments\\users\\image\\";
     private final UserService userService;
 
     @PostMapping

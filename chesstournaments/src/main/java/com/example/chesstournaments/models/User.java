@@ -15,9 +15,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@JsonInclude(JsonInclude.Include.ALWAYS)
 @Table(name = "users")
 public class User {
     @Id
@@ -37,9 +38,9 @@ public class User {
     private String photoUrl = "http://localhost:8080/users/image/default.jpg";
 
     // Constructor para establecer el valor por defecto de photoUrl
-    public User() {
-        this.photoUrl = ""; // Cambia "default_url" al valor por defecto que desees
-    }
+    /*public User() {
+        this.photoUrl = "http://localhost:8080/users/image/default.jpg"; // Cambia "default_url" al valor por defecto que desees
+    }*/
 
     //TODO: Incluir las relaciones.
 

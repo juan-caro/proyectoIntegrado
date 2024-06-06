@@ -27,7 +27,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequestMapping("/tournaments")
 @RequiredArgsConstructor
 public class TournamentController {
-    public static final String PHOTO_DIRECTORY =  "C:\\Users\\johnm\\OneDrive\\Documentos\\Springboot\\chesstournaments\\tournaments\\image\\";
+    public static final String PHOTO_DIRECTORY =  "C:\\Users\\Morius\\OneDrive\\Documentos\\Springboot\\chesstournaments\\tournaments\\image\\";
     private final TournamentService tournamentService;
     private final UserRepo userRepository;
 
