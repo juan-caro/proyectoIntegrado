@@ -1,5 +1,6 @@
 package com.example.chesstournaments.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,5 +41,6 @@ public class Club {
 
     @OneToOne
     @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = true)
+    @JsonBackReference("user-createdClub")
     private User creator;
 }

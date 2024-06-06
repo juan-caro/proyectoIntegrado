@@ -20,7 +20,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequest loginRequest) {
         User user = userService.validateUser(loginRequest.getUsername(), loginRequest.getPassword());
-        System.out.println(user);
+        System.out.println("aaa);
         if (user != null) {
             System.out.println("no nulo");
             return ResponseEntity.ok(user);

@@ -1,6 +1,7 @@
 package com.example.chesstournaments.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,5 +31,6 @@ public class Game {
 
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = false)
+    @JsonBackReference("tournament-games")
     private Tournament tournament;
 }

@@ -45,10 +45,10 @@ public class Tournament {
 
     @ManyToOne
     @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = true)
-    @JsonBackReference
+    @JsonBackReference("user-createdTournaments")
     private User creator;
 
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference("tournament-games")
     private List<Game> games;
 }

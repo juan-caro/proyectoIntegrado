@@ -1,5 +1,6 @@
 package com.example.chesstournaments.controllers;
 
+import com.example.chesstournaments.exceptions.CustomNotFoundException;
 import com.example.chesstournaments.models.User;
 import com.example.chesstournaments.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequestMapping("/tournaments")
 @RequiredArgsConstructor
 public class TournamentController {
-    public static final String PHOTO_DIRECTORY =  "C:\\Users\\Morius\\OneDrive\\Documentos\\Springboot\\chesstournaments\\tournaments\\image\\";
+    public static final String PHOTO_DIRECTORY =  "C:\\Users\\johnm\\OneDrive\\Documentos\\Springboot\\chesstournaments\\tournaments\\image\\";
     private final TournamentService tournamentService;
     private final UserRepo userRepository;
 
@@ -80,5 +81,10 @@ public class TournamentController {
     public ResponseEntity<List<Tournament>> getRecentTournaments() {
         List<Tournament> tournaments = tournamentService.getRecentTournaments();
         return new ResponseEntity<>(tournaments, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(CustomNotFoundException.class)
+    public ResponseEntity<String> handleCustomNotFoundException(CustomNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

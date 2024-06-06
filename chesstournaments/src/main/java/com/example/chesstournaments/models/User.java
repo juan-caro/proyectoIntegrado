@@ -5,10 +5,7 @@ package com.example.chesstournaments.models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
@@ -18,8 +15,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @Table(name = "users")
 public class User {
@@ -35,8 +32,14 @@ public class User {
     private String email;
     @Column(name = "elo", unique = false)
     private Long elo;
+    @Builder.Default
     @Column(name = "photoUrl")
-    private String photoUrl;
+    private String photoUrl = "http://localhost:8080/users/image/default.jpg";
+
+    // Constructor para establecer el valor por defecto de photoUrl
+    public User() {
+        this.photoUrl = ""; // Cambia "default_url" al valor por defecto que desees
+    }
 
     //TODO: Incluir las relaciones.
 
@@ -44,12 +47,13 @@ public class User {
     @JoinColumn(name = "club_id")
     private Club club;
     @OneToOne(mappedBy = "creator", cascade = CascadeType.ALL)
+    @JsonManagedReference("user-createdClub")
     private Club createdClub;
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @JsonManagedReference("user-participations")
     private List<Participation> participations;
     @OneToMany(mappedBy = "creator")
-    @JsonManagedReference
+    @JsonManagedReference("user-createdTournaments")
     private List<Tournament> createdTournaments;
 
 
