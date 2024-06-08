@@ -10,6 +10,7 @@ import { LayoutTorneosUser } from "../components/layouts/users/LayoutTorneosUser
 import { LayoutUserProfile } from "../components/layouts/users/LayoutUserProfile"
 import { LayoutClubsIndex } from "../components/layouts/clubs/LayoutClubsIndex"
 import { LayoutClubsForm } from "../components/layouts/clubs/LayoutClubsForm"
+import { LayoutClubsDetails } from "../components/layouts/clubs/LayoutClubsDetails"
 
 export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, setUserLogged}) => {
     
@@ -28,6 +29,7 @@ export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, s
                 <Route path="/miperfil" element={<LayoutUserProfile isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/clubs" element={ <LayoutClubsIndex isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/clubs/create" element={ <LayoutClubsForm isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
+                <Route path="/clubs/details" element={ <LayoutClubsDetails isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
             </Routes>
         </>
     )

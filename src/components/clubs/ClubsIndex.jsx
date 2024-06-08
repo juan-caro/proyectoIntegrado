@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const ClubsIndex = () => {
   const [clubs, setClubs] = useState([]);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchClubs();
@@ -13,11 +15,16 @@ export const ClubsIndex = () => {
   const fetchClubs = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/clubs?page=${page}&size=${size}`);
+      console.log("clubs" + response.data);
       setClubs(response.data.content);
     } catch (error) {
       console.error('Error fetching clubs:', error);
     }
   };
+
+  const handleDetails = (club) => {
+    navigate('/clubs/details', { state: { club } });
+};
 
   return (
     <>
@@ -44,9 +51,9 @@ export const ClubsIndex = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {clubs.length === 0 ? (
+                            {!clubs || clubs.length === 0 ? (
                                 <tr>
-                                    <td colSpan="4">No tournaments available</td>
+                                    <td colSpan="4">Actualmente no hay clubs fundados.</td>
                                 </tr>
                             ) : (
                                 clubs.map(club => (
@@ -55,7 +62,12 @@ export const ClubsIndex = () => {
                                         <td>{club.description}</td>
                                         <td>{club.rating}</td>
                                         <td>
-                                            boton
+                                            <button
+                                                className="btn btn-primary btn-sm d-flex float-end"
+                                                onClick={() => handleDetails(club)}
+                                            >
+                                                Ver detalles
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
