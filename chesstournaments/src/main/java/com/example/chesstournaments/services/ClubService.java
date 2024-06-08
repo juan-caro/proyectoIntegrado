@@ -1,6 +1,8 @@
 package com.example.chesstournaments.services;
 
 import com.example.chesstournaments.models.Tournament;
+import com.example.chesstournaments.models.User;
+import com.example.chesstournaments.repository.UserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @RequiredArgsConstructor
 public class ClubService {
     private final ClubRepo clubRepo;
+    private final UserRepo userRepo;
 
     public Page<Club> getAllClubs(int page, int size){
         return clubRepo.findAll(PageRequest.of(page, size, Sort.by("name")));
@@ -74,5 +77,43 @@ public class ClubService {
             throw new RuntimeException("Unable to save image");
         }
     };
-    
+
+    public void joinClub(String clubId, String userId) {
+        Club club = getClub(clubId);
+        User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User Not Found"));
+        if (!club.getMembers().contains(user)) {
+
+            club.getMembers().add(user);
+            user.setClub(club);
+            System.out.println("añadido");
+            clubRepo.save(club);
+            userRepo.save(user);
+            System.out.println("saveado");
+        }
+    }
+
+    public void leaveClub(String clubId, String userId) {
+        Club club = getClub(clubId);
+        User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User Not Found"));
+        if (club.getMembers().contains(user)) {
+            club.getMembers().remove(user);
+            user.setClub(null);
+            clubRepo.save(club);
+            userRepo.save(user);
+        } else {
+            throw new RuntimeException("User is not a member of the club");
+        }
+    }
+
+    public boolean isUserMemberOfClub(String clubId, String userId) {
+        Club club = getClub(clubId);
+        boolean matches = false;
+        for (User member : club.getMembers()){
+            if(member.getId().equals(userId)){
+                matches = true;
+            }
+        }
+        System.out.println("matches: " + matches);
+        return matches;
+    }
 }

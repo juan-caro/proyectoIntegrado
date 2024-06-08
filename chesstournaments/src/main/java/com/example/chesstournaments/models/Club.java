@@ -2,6 +2,7 @@ package com.example.chesstournaments.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,6 +38,7 @@ public class Club {
     private String iconUrl;
 
     @OneToMany(mappedBy = "club")
+    @JsonManagedReference
     private List<User> members = new ArrayList<>();
 
     @OneToOne
