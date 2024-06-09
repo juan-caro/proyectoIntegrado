@@ -20,7 +20,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    public static final String PHOTO_DIRECTORY =  "C:\\Users\\johnm\\OneDrive\\Documentos\\Springboot\\chesstournaments\\users\\image\\";
+    public static final String PHOTO_DIRECTORY =  "C:\\Users\\Morius\\OneDrive\\Documentos\\Springboot\\chesstournaments\\users\\image\\";
     private final UserService userService;
 
     @PostMapping
@@ -43,6 +43,11 @@ public class UserController {
     @GetMapping("/username/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable(value = "username") String username) {
         return ResponseEntity.ok().body(userService.getUserByUsername(username));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User updatedUser) {
+        return ResponseEntity.ok().body(userService.updateUser(id, updatedUser));
     }
 
     @PutMapping("/photo")

@@ -35,6 +35,18 @@ public class TournamentService {
         return tournamentRepo.findAll(PageRequest.of(page, size, Sort.by("name")));
     }
 
+    public List<Tournament> getAllTournamentsList(){
+        return tournamentRepo.findAll();
+    }
+
+    public List<Tournament> getCreatorTournaments(String creatorId){
+        return tournamentRepo.findByCreatorId(creatorId);
+    }
+
+    public void deleteTournament(String id){
+        tournamentRepo.deleteById(id);
+    }
+
     public Tournament getTournament(String id){
         return tournamentRepo.findById(id).orElseThrow(() -> new RuntimeException("Tournament Not Found"));
     }

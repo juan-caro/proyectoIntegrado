@@ -27,7 +27,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequestMapping("/tournaments")
 @RequiredArgsConstructor
 public class TournamentController {
-    public static final String PHOTO_DIRECTORY =  "C:\\Users\\johnm\\OneDrive\\Documentos\\Springboot\\chesstournaments\\tournaments\\image\\";
+    public static final String PHOTO_DIRECTORY =  "C:\\Users\\Morius\\OneDrive\\Documentos\\Springboot\\chesstournaments\\tournaments\\image\\";
     private final TournamentService tournamentService;
     private final UserRepo userRepository;
 
@@ -86,5 +86,22 @@ public class TournamentController {
     @ExceptionHandler(CustomNotFoundException.class)
     public ResponseEntity<String> handleCustomNotFoundException(CustomNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/creatorTournaments")
+    public ResponseEntity<List<Tournament>> getCreatorTournaments(@RequestParam String userId) {
+        List<Tournament> tournaments = tournamentService.getCreatorTournaments(userId);
+
+        for (Tournament t : tournaments){
+            System.out.println("Tournament: " + t.getCreator().getUsername());
+        }
+
+        return new ResponseEntity<>(tournaments, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/eliminate")
+    public ResponseEntity<Void> deleteTournament(@RequestParam String tournamentId) {
+        tournamentService.deleteTournament(tournamentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

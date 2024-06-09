@@ -9,4 +9,5 @@ public interface TournamentRepo extends JpaRepository<Tournament, String> {
     List<Tournament> findByCreatorId(String creatorId);
     Tournament findTournamentById(String tournamentId);
     List<Tournament> findTop3ByOrderByDateTimeDesc();
+
 }

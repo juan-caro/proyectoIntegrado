@@ -1,0 +1,28 @@
+Términos:
+Nlight: Ataque Neutral suave
+Slight: Ataque De Lado suave
+Dlight: Ataque Abajo suave
+
+Nair: Ataque de aire Neutral
+Sair: Ataque De Lado suave
+Dair: Ataque Abajo suave
+
+Nsig: Adelantar el Paso en Neutral /Ataque pesado
+Ssig: Adelantar el Paso de Lado/Ataque pesado
+Dsig: Adelantar el Paso de Abajo/Ataque pesado
+
+J: Saltar
+Rec: Recovery (j + Ataque pesado)
+GC: Gravity cancel (Movimiento con el cual atacas en el aire)
+GP: Groundpound (Movimiento de azote con piernas)
+Sig: Adelantar el paso o en inglés "Signature" es el movimiento de predicción el cual esquivas al oponente y le respondes con un ataque pesado o de remate
+Read: Predecir el movimiento o esquive del oponente
+Throw: Lanzamiento del arma
+Pickup: agarre del arma
+
+HMdodge: Movimiento de esquivo Horizontal
+DDdodge: Esquivo hacia Abajo Diagonal
+UDdodge: Esquivo en Encima Diagonal
+Pivot: Cambiar la dirección
+
+Para completar cualquiera de los combos de tiros deberías a aprender a agarrar las armas y asignar una entrada a los combos de tiro/agarre

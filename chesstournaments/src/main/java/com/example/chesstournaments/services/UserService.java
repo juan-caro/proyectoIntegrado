@@ -90,4 +90,12 @@ public class UserService {
         }
     };
 
+    @Transactional
+    public User updateUser(String id, User updatedUser) {
+        User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User Not Found"));
+        user.setElo(updatedUser.getElo());
+        // Add other fields to update as needed
+        return userRepo.save(user);
+    }
+
 }
