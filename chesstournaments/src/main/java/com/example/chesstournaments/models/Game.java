@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UuidGenerator;
 
 @Entity
@@ -27,10 +29,12 @@ public class Game {
 
     @ManyToOne
     @JoinColumn(name = "platform_id", nullable = false)
+    @JsonBackReference("platform-games")
     private Platform platform;
 
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = false)
     @JsonBackReference("tournament-games")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Tournament tournament;
 }

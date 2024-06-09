@@ -25,6 +25,7 @@ public class PlatformController {
     @GetMapping
     public ResponseEntity<Page<Platform>> getPlatforms(@RequestParam(value = "page", defaultValue = "0") int page,
                                                @RequestParam(value = "size", defaultValue = "10") int size) {
+        System.out.println("platform " + platformService.getAllPlatforms(page, size) );
         return ResponseEntity.ok().body(platformService.getAllPlatforms(page, size));
     }
 

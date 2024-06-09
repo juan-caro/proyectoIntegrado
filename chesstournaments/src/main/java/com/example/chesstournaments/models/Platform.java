@@ -1,5 +1,6 @@
 package com.example.chesstournaments.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,5 +31,6 @@ public class Platform {
     private String platformUrl;
 
     @OneToMany(mappedBy = "platform", cascade = CascadeType.ALL)
+    @JsonBackReference("platform-games")
     private List<Game> games;
 }

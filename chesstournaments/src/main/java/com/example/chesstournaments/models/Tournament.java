@@ -39,7 +39,7 @@ public class Tournament {
     @Column(name = "iconUrl")
     private String iconUrl;
 
-    @OneToMany(mappedBy = "tournament")
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Participation> participations;
 
