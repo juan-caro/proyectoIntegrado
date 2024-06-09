@@ -47,7 +47,9 @@ const handleDelete = async (tournament) => {
                 'Eliminado!',
                 'El torneo ha sido eliminado.',
                 'success'
-            );
+            ).then(() => {
+                window.location.reload();
+            });
             // Aquí puedes actualizar el estado de los torneos para reflejar la eliminación
         } catch (error) {
             console.error('Error eliminando torneo:', error);

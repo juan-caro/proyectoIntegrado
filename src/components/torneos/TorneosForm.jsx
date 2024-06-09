@@ -6,8 +6,8 @@ import Swal from 'sweetalert2';
 export const TorneosForm = ({ userLogged }) => {
     const [name, setName] = useState('');
     const [dateTime, setDateTime] = useState('');
-    const [format, setFormat] = useState('');
-    const [state, setState] = useState('');
+    const [format, setFormat] = useState('Bala');
+    const [state, setState] = useState('Activo');
     const [rounds, setRounds] = useState('');
     const [file, setFile] = useState(null);
     const [platforms, setPlatforms] = useState([]);
