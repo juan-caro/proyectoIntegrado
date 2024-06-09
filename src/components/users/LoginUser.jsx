@@ -41,6 +41,7 @@ export const LoginUser = ({ handleLogin, setUserLogged }) => {
 
       const user = await response.json();
       console.log(response.json());
+      setPassword(decryptedPassword);
       handleLogin(user);
       setUserLogged(user);
       navigate('/');

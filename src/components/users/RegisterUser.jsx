@@ -33,6 +33,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
       const encryptedPassword = encryptPassword(password);
       console.log(encryptedPassword);
       setPassword(encryptedPassword);
+      
     const response = await fetch('http://localhost:8080/users', {
       method: 'POST',
       headers: {
@@ -61,7 +62,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
       
     } else {
      setPassword(decryptedPassword);
-      console.error('Error en el registro');
+      console.error(response.data);
     }
   };
 

@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const UserProfile = ({ userLogged }) => {
+  const navigate = useNavigate();
 
   console.log(userLogged);
+
+  const handleEdit = () => {
+    navigate('/miperfil/edit');
+};
+
 
   return (
     <div className='container' style={{ maxWidth: '50%'}}>
@@ -17,8 +24,11 @@ export const UserProfile = ({ userLogged }) => {
                     style={{ maxWidth: "100%", height: "6%", width: "6%", borderRadius: "60%" }}
                 />
             )}
-            <h5 className='card-title ms-3'> {userLogged.username} </h5>
+
+            <h5 className='card-title ms-3'> {userLogged.username} </h5>  
           </div>
+          
+          
         </div>
         <div className="card-body profile-details">
           <div className='row'>
@@ -30,6 +40,16 @@ export const UserProfile = ({ userLogged }) => {
             </div>
           </div>
           {/* Añade más campos según sea necesario */}
+        </div>
+        <div className='card-footer'>
+
+          <button
+                className="btn btn-primary btn-sm float-end"
+                onClick={() => handleEdit()}
+            >
+                Editar perfil
+            </button>
+
         </div>
       </div>
     </div>

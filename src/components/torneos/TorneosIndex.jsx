@@ -66,7 +66,7 @@ export const TorneosIndex = () => {
                         <tbody>
                             {tournaments.length === 0 ? (
                                 <tr>
-                                    <td colSpan="5">No tournaments available</td>
+                                    <td colSpan="6">No hay torneos registrados actualmente.</td>
                                 </tr>
                             ) : (
                                 tournaments.map(tournament => (

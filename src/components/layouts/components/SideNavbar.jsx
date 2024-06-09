@@ -26,9 +26,13 @@ export const SideNavbar = ({isLoggedIn, userLogged}) => {
           <div className="sb-nav-link-icon"><i className="fa-solid fa-id-card"></i></div>
           Mi perfil
         </Link>
-        <Link className="nav-link" to={{ pathname: '/mistorneos'}}>
+        <Link className="nav-link" to={{ pathname: '/torneos_participados'}}>
           <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
-          Mis torneos
+          Torneos Participados
+        </Link>
+        <Link className="nav-link" to={{ pathname: '/torneos_organizados'}}>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
+          Torneos Organizados
         </Link>
         <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-person me-2"></i>Clubs</div>
         <Link className="nav-link" to={{ pathname: '/clubs'}}>
@@ -38,6 +42,15 @@ export const SideNavbar = ({isLoggedIn, userLogged}) => {
         <Link className="nav-link" to={{ pathname: '/clubs/create'}}>
           <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
           Fundar un nuevo club
+        </Link>
+        <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-person me-2"></i>Plataformas</div>
+        <Link className="nav-link" to={{ pathname: '/platforms'}}>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-id-card"></i></div>
+          Plataformas existentes
+        </Link>
+        <Link className="nav-link" to={{ pathname: '/platforms/create'}}>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
+          Registrar plataforma
         </Link>
       </div>
     </div>
