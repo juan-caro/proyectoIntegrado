@@ -64,7 +64,9 @@ public class UserService {
     public String uploadPhoto(String id, MultipartFile file){
         User user = getUser(id);
         String photoUrl = photoFunction.apply(id, file);
+        System.out.println("cambio foto");
         user.setPhotoUrl(photoUrl);
+        System.out.println("foto cambiada a " + user.getPhotoUrl());
         userRepo.save(user);
         return photoUrl;
     }
@@ -94,6 +96,8 @@ public class UserService {
     public User updateUser(String id, User updatedUser) {
         User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User Not Found"));
         user.setElo(updatedUser.getElo());
+        user.setHasChessComProfile(updatedUser.getHasChessComProfile());
+        user.setChessComProfile(updatedUser.getChessComProfile());
         // Add other fields to update as needed
         return userRepo.save(user);
     }

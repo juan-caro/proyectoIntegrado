@@ -32,11 +32,17 @@ public class User {
     private String password;
     @Column(name = "email", unique = true, nullable = false)
     private String email;
+    @Builder.Default
     @Column(name = "elo", unique = false)
-    private Long elo;
+    private Long elo = 0L;
     @Builder.Default
     @Column(name = "photoUrl")
     private String photoUrl = "http://localhost:8080/users/image/default.jpg";
+    @Builder.Default
+    @Column(name = "has_chess_com_profile")
+    private Boolean hasChessComProfile = false;
+    @Column(name = "chess_com_profile")
+    private String chessComProfile;
 
     // Constructor para establecer el valor por defecto de photoUrl
     /*public User() {
@@ -58,6 +64,19 @@ public class User {
     @OneToMany(mappedBy = "creator")
     @JsonManagedReference("user-createdTournaments")
     private List<Tournament> createdTournaments;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", elo=" + elo +
+                ", hasChessComProfile=" + hasChessComProfile +
+                ", chessComProfile='" + chessComProfile + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
+                '}';
+    }
 
 
 
