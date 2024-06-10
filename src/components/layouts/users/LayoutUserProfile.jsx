@@ -4,7 +4,7 @@ import { SideNavbar } from '../components/SideNavbar';
 import { UserProfile } from '../../users/UserProfile';
 import { useNavigate } from 'react-router-dom';
 
-export const LayoutUserProfile = ({ isLoggedIn, userLogged }) => {
+export const LayoutUserProfile = ({ isLoggedIn, userLogged, handleLogin }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export const LayoutUserProfile = ({ isLoggedIn, userLogged }) => {
                 </div>
                 <div id="layoutSidenav_content" className="bg-white-to-green">
                     <main className="mb-0">
-                        <UserProfile userLogged={userLogged} />
+                        <UserProfile userLogged={userLogged} handleLogin={handleLogin} />
                     </main>
                     <footer className="custom-bg-dark text-white">
                         <div className="custom-bg-dark">

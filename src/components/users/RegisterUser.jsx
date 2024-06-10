@@ -11,10 +11,14 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
   const navigate = useNavigate();
 
   
-    const encryptPassword = (password) => {
-        const ciphertext = CryptoJS.AES.encrypt(password, 'secret').toString(); // Cifra la contraseña usando una clave secreta
-        return ciphertext;
-    };
+  const encryptPassword = (password) => {
+    const key = CryptoJS.enc.Utf8.parse('secret'); // Clave de cifrado (debe ser de 16, 24 o 32 bytes para AES)
+    const encrypted = CryptoJS.AES.encrypt(password, key, { 
+        mode: CryptoJS.mode.ECB, // Modo ECB para cifrado determinista
+        padding: CryptoJS.pad.Pkcs7 
+    });
+    return encrypted.toString();
+};
     
     
     // const decryptPassword = (ciphertext) => {
@@ -39,17 +43,17 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ username, password, email })
+      body: JSON.stringify({ username, password: encryptedPassword, email })
     });
 
     if (response.ok) {
-
+        console.log(password);
         const responseLogin = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password: encryptedPassword }),
         });
 
         if(responseLogin.ok){

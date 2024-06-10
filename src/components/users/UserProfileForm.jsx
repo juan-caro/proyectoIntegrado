@@ -3,8 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-export const UserProfileForm = ({ userLogged, setUserLogged }) => {
+export const UserProfileForm = ({ userLogged, setUserLogged, handleLogin }) => {
     const [elo, setElo] = useState('');
+    const [chessprofile, setChessProfile] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const navigate = useNavigate();
 
@@ -14,6 +15,7 @@ export const UserProfileForm = ({ userLogged, setUserLogged }) => {
             try {
                 const response = await axios.get(`http://localhost:8080/users/${userLogged.id}`);
                 setElo(response.data.elo);
+                setChessProfile(response.data.chessComProfile);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
@@ -27,17 +29,28 @@ export const UserProfileForm = ({ userLogged, setUserLogged }) => {
             title: "Perfil Actualizado!",
             text: "Tu perfil se ha actualizado con éxito.",
             icon: "success"
+        }).then(() => {
+            window.location.reload();
         });
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const updatedUser = {
-                elo,
-                id: userLogged.id,
-                // Assuming other fields that should remain unchanged are also sent here
-            };
+            let updatedUser;
+            if(chessprofile !== ''){
+                updatedUser = {
+                    elo,
+                    id: userLogged.id,
+                    hasChessComProfile: true,
+                    chessComProfile: chessprofile
+                };
+            } else {
+                updatedUser = {
+                    elo,
+                    id: userLogged.id,
+                };
+            }
     
             // Update the user profile
             await axios.put(`http://localhost:8080/users/${userLogged.id}`, updatedUser);
@@ -53,16 +66,23 @@ export const UserProfileForm = ({ userLogged, setUserLogged }) => {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
+                console.log("photo subida");
             }
     
-            showSwal();
+            
     
             // Fetch the updated user data
             const response = await axios.get(`http://localhost:8080/users/${userLogged.id}`);
             // Update userLogged with the updated data
-            setUserLogged(response.data);
+
+            sessionStorage.setItem('login', JSON.stringify({
+                isAuth: true,
+                userLogged: response.data,
+              }));
     
+              showSwal();
             navigate('/miperfil');
+
         } catch (error) {
             console.error('Error updating profile:', error);
         }
@@ -90,6 +110,16 @@ export const UserProfileForm = ({ userLogged, setUserLogged }) => {
                                     value={elo}
                                     onChange={(e) => setElo(e.target.value)}
                                     required
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="chessprofile" className="form-label">Usuario de Chess.com</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="chessprofile"
+                                    value={chessprofile}
+                                    onChange={(e) => setChessProfile(e.target.value)}
                                 />
                             </div>
                             <div className="mb-3">

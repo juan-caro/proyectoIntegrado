@@ -30,14 +30,14 @@ export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, s
                 <Route path="/logout" element={<LogoutUser handleLogout={handleLogout}/>} />
                 <Route path="/torneos/details" element={<LayoutTorneosDetails isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/torneos_participados" element={<LayoutTorneosUser isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
-                <Route path="/miperfil" element={<LayoutUserProfile isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
+                <Route path="/miperfil" element={<LayoutUserProfile isLoggedIn={isLoggedIn} userLogged={userLogged} handleLogin={handleLogin}/>} />
                 <Route path="/clubs" element={ <LayoutClubsIndex isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/clubs/create" element={ <LayoutClubsForm isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/clubs/details" element={ <LayoutClubsDetails isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/torneos_organizados" element={<LayoutTorneosCreator isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/platforms" element={ <LayoutPlatformIndex isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/platforms/create" element={ <LayoutPlatformForm isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
-                <Route path="/miperfil/edit" element={<LayoutUserProfileForm isLoggedIn={isLoggedIn} userLogged={userLogged} setUserLogged={setUserLogged} />} />
+                <Route path="/miperfil/edit" element={<LayoutUserProfileForm isLoggedIn={isLoggedIn} userLogged={userLogged} setUserLogged={setUserLogged} handleLogin={handleLogin} />} />
             </Routes>
         </>
     )
