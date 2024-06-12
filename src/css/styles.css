@@ -10,6 +10,7 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ @import url("http://fonts.googleapis.com/css?family=Oswald:400,300,700");
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -93,7 +94,7 @@
 
 body {
   margin: 0;
-  font-family: var(--bs-body-font-family);
+  font-family: 'Oswald', sans-serif !important;
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
@@ -11263,3 +11264,4 @@ body {
   font-size: 0.5rem; /* Tamaño de fuente más pequeño */
   padding: 0.2rem 0.5rem; /* Ajustar el relleno según sea necesario */
 }
+

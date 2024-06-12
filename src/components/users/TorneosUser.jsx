@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+
 
 export const TorneosUser = ({ userLogged }) => {
   const [tournaments, setTournaments] = useState([]);
@@ -25,6 +28,17 @@ export const TorneosUser = ({ userLogged }) => {
     navigate('/torneos/details', { state: { tournament } });
 };
 
+const buttonTemplate = (rowData) => {
+    return (
+        <button
+            className="btn btn-primary btn-sm"
+            onClick={() => handleDetails(rowData)}
+        >
+            Ver detalles
+        </button>
+    );
+};
+
 
   return (
     <>
@@ -36,59 +50,20 @@ export const TorneosUser = ({ userLogged }) => {
             </ol>
             <div className="card mb-4">
                 <div className="card-header">
-                    <i className="fas fa-crown me-1"></i>
+                    <i className="fa-solid fa-trophy me-1"></i>
                     Torneos
                 </div>
                 <div className="card-body">
-                    <table id="datatablesSimple" className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Fecha y Hora</th>
-                                <th>Formato</th>
-                                <th>Estado</th>
-                                <th>Rondas</th>
-                                <th className="d-flex justify-content-end">Ver detalles</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tournaments.length === 0 ? (
-                                <tr>
-                                    <td colSpan="6">Todavía no has participado en ningún torneo.</td>
-                                </tr>
-                            ) : (
-                                tournaments.map(tournament => (
-                                    <tr key={tournament.id}>
-                                        <td>{tournament.name}</td>
-                                        <td>{new Date(tournament.dateTime).toLocaleString()}</td>
-                                        <td>{tournament.format}</td>
-                                        <td>{tournament.state}</td>
-                                        <td>{tournament.rounds}</td>
-                                        <td>
-                                            <button
-                                                className="btn btn-primary btn-sm d-flex float-end"
-                                                onClick={() => handleDetails(tournament)}
-                                            >
-                                                Ver detalles
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Fecha y Hora</th>
-                                <th>Formato</th>
-                                <th>Estado</th>
-                                <th>Rondas</th>
-                                <th className="d-flex justify-content-end">Ver detalles</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-
+                    <DataTable value={tournaments} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} stripedRows tableStyle={{ minWidth: '50rem' }} locale="es">
+                        <Column field="name" header="Nombre" sortable style={{ width: '15%' }}></Column>
+                        <Column field="dateTime" header="Fecha y Hora" sortable style={{ width: '15%' }} body={(rowData) => (
+                            <span>{new Date(rowData.dateTime).toLocaleString()}</span>
+                        )}></Column>
+                        <Column field="format" header="Formato" sortable style={{ width: '15%' }}></Column>
+                        <Column field="state" header="Estado" sortable style={{ width: '15%' }}></Column>
+                        <Column field="rounds" header="Rondas" sortable style={{ width: '15%' }}></Column>
+                        <Column header="Acciones" body={buttonTemplate} style={{ width: '15%' }}></Column>
+                    </DataTable>
                 </div>
             </div>
         </div>  

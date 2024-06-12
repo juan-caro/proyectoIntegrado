@@ -87,14 +87,20 @@ export const TorneosDetails = ({ tournament, user, isLoggedIn}) => {
                 </div>
                 <div className='card-footer'>
                 {isLoggedIn ? (
+                    tournament.state === 'Finalizado' ? (
+                        <p>Ya no puede inscribirse porque el torneo ha finalizado.</p>
+                    ) : tournament.state === 'Pendiente' ? (
+                        <p>El torneo estará próximamente disponible para inscribirse.</p>
+                    ) : (
                         isRegistered ? (
                             <button className='btn btn-danger' onClick={handleUnregister}>Cancelar Inscripción</button>
                         ) : (
                             <button className='btn btn-primary' onClick={handleRegister}>Inscribirse</button>
                         )
-                    ) : (
-                        <p>Para inscribirse, por favor <Link to={{ pathname: '/login'}}>inicie sesión.</Link></p>
-                    )}
+                    )
+                ) : (
+                    <p>Para inscribirse, por favor <Link to={{ pathname: '/login'}}>inicie sesión.</Link></p>
+                )}
                 </div>
             </div>
         </div>

@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 
 export const TorneosCreator = ({ userLogged }) => {
   const [tournaments, setTournaments] = useState([]);
@@ -24,6 +26,10 @@ export const TorneosCreator = ({ userLogged }) => {
 
   const handleDetails = (tournament) => {
     navigate('/torneos/details', { state: { tournament } });
+};
+
+const handleEdit = (tournament) => {
+    navigate('/torneos/edit', { state: { tournament } });
 };
 
 const handleDelete = async (tournament) => {
@@ -62,6 +68,31 @@ const handleDelete = async (tournament) => {
     }
 };
 
+const buttonTemplate = (rowData) => {
+    return (
+            <div>
+                <button
+                    className="btn btn-primary btn-sm me-3"
+                    onClick={() => handleDetails(rowData)}
+                >
+                    Ver detalles
+                </button>
+                <button
+                    className='btn btn-warning btn-sm me-3 text-white'
+                    onClick={() => handleEdit(rowData)}
+                >
+                    Editar
+                </button>
+                <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(rowData)}
+                >
+                    Eliminar
+                </button>
+            </div>
+    );
+};
+
   return (
     <>
         <div className="container-fluid px-4">
@@ -72,72 +103,20 @@ const handleDelete = async (tournament) => {
             </ol>
             <div className="card mb-4"  style={{maxWidth: '1200px'}}>
                 <div className="card-header">
-                    <i className="fas fa-crown me-1"></i>
+                    <i className="fa-solid fa-trophy me-1"></i>
                     Torneos
                 </div>
                 <div className="card-body">
-                    <table id="datatablesSimple" className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Fecha y Hora</th>
-                                <th scope="col">Formato</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Rondas</th>
-                                <th scope="col">Acciones</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tournaments.length === 0 ? (
-                                <tr>
-                                    <td colSpan="6">Todavía no has participado en ningún torneo.</td>
-                                </tr>
-                            ) : (
-                                tournaments.map(tournament => (
-                                    <tr key={tournament.id}>
-                                        <td>{tournament.name}</td>
-                                        <td>{new Date(tournament.dateTime).toLocaleString()}</td>
-                                        <td>{tournament.format}</td>
-                                        <td>{tournament.state}</td>
-                                        <td>{tournament.rounds}</td>
-                                        <td>
-                                            <div>
-                                                <button
-                                                    className="btn btn-primary btn-sm me-3"
-                                                    onClick={() => handleDetails(tournament)}
-                                                >
-                                                    Ver detalles
-                                                </button>
-                                                <button
-                                                    className="btn btn-danger btn-sm"
-                                                    onClick={() => handleDelete(tournament)}
-                                                >
-                                                    Eliminar
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Fecha y Hora</th>
-                                <th scope="col">Formato</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Rondas</th>
-                                <th scope="col">Acciones</th>
-                                
-                            </tr>
-                        </tfoot>
-                    </table>
-
-                </div>
+                <DataTable value={tournaments} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} stripedRows tableStyle={{ minWidth: '50rem' }} locale="es">
+                    <Column field="name" header="Nombre" sortable style={{ width: '15%' }}></Column>
+                    <Column field="dateTime" header="Fecha y Hora" sortable style={{ width: '15%' }} body={(rowData) => (
+                        <span>{new Date(rowData.dateTime).toLocaleString()}</span>
+                    )}></Column>
+                    <Column field="format" header="Formato" sortable style={{ width: '15%' }}></Column>
+                    <Column field="state" header="Estado" sortable style={{ width: '15%' }}></Column>
+                    <Column field="rounds" header="Rondas" sortable style={{ width: '15%' }}></Column>
+                    <Column header="Acciones" body={buttonTemplate} style={{ width: '20%' }}></Column>
+                </DataTable>                </div>
             </div>
         </div>  
     </>

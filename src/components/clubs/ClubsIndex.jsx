@@ -36,7 +36,7 @@ export const ClubsIndex = () => {
             </ol>
             <div className="card mb-4">
                 <div className="card-header">
-                    <i className="fas fa-crown me-1"></i>
+                <i className="fa-solid fa-people-group me-1"></i>
                     Clubs
                 </div>
                 <div className="card-body">

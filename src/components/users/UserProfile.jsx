@@ -60,7 +60,7 @@ const getLastGameUrl = (stats) => {
 
 
   return (
-    <div className='container' style={{ maxWidth: '50%'}}>
+    <div className='container' style={{ maxWidth: '80%'}}>
       <div className="card shadow-lg border-0 rounded-lg mt-5 user-profile">
         <div className='card-header'>
           <div className='d-flex'>
@@ -90,19 +90,28 @@ const getLastGameUrl = (stats) => {
                   <>
                       <h6>Datos Chess.com</h6>
                       <div className="col d-flex align-items-center">
-                          <p><strong>Rapid Winrate:</strong> {chessStats.chess_rapid ? getWinrate(chessStats.chess_rapid): 'N/A'}%</p>
-                          <p><strong>Bullet Winrate:</strong> {chessStats.chess_bullet ? getWinrate(chessStats.chess_bullet): 'N/A'}%</p>
-                          <p><strong>Blitz Winrate:</strong> {chessStats.chess_blitz ? getWinrate(chessStats.chess_blitz) : 'N/A'}%</p>
+                          <div className='row'>
+                            <div className='col'>
+                            <p><strong>Rapid Winrate:</strong> {chessStats.chess_rapid ? getWinrate(chessStats.chess_rapid): 'N/A'}%</p>
+                            <p><strong>Bullet Winrate:</strong> {chessStats.chess_bullet ? getWinrate(chessStats.chess_bullet): 'N/A'}%</p>
+                            <p><strong>Blitz Winrate:</strong> {chessStats.chess_blitz ? getWinrate(chessStats.chess_blitz) : 'N/A'}%</p>
+                            </div>
                           {chessProfile && (
                               <>
-                                  <p><strong>Título:</strong> {chessProfile.verified ? 'Verificado' : 'No verificado'}</p>
-                                  <p><strong>Estatus de la cuenta:</strong> {chessProfile.status}</p>
-                                  <p><strong>Streamer:</strong> {chessProfile.is_streamer ? 'Sí' : 'No'}</p>
-                                  {chessProfile.is_streamer && (
-                                      <p><strong>URL de Twitch:</strong> {chessProfile.twitch_url}</p>
-                                  )}
+                                  <div className='col'>
+                                    <p><strong>Título:</strong> {chessProfile.verified ? 'Verificado' : 'No verificado'}</p>
+                                    <p><strong>Estatus de la cuenta:</strong> {chessProfile.status}</p>
+                                  </div>
+                                  <div className='col'>
+                                    <p><strong>Streamer:</strong> {chessProfile.is_streamer ? 'Sí' : 'No'}</p>
+                                    {chessProfile.is_streamer && (
+                                        <p><a href={chessProfile.twitch_url} className='btn btn-primary btn-sm'>Twitch</a></p>
+                                    )}
+                                  </div>
                               </>
+                            
                           )}
+                          </div>
                       </div>
                       {getLastGameUrl(chessStats) && (
                           <div className="mt-3">

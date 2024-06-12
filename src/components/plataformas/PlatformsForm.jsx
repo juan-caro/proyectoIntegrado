@@ -19,6 +19,7 @@ export const PlatformsForm = () => {
         };
 
         try {
+            console.log("plataforma nueva: " + newPlatform.faceToFace);
             await axios.post('http://localhost:8080/platforms', newPlatform);
             Swal.fire({
                 title: "Plataforma Creada",
@@ -62,7 +63,7 @@ export const PlatformsForm = () => {
                                     className="form-select"
                                     id="faceToFace"
                                     value={faceToFace}
-                                    onChange={(e) => setFaceToFace(e.target.value === 'true')}
+                                    onChange={(e) => setFaceToFace(e.target.value)}
                                     required
                                 >
                                     <option value="false">Online</option>

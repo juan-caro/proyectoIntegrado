@@ -8,6 +8,9 @@ export const ClubsForm = ({userLogged}) => {
     const [description, setDescription] = useState('');
     const [rating, setRating] = useState(0);
     const [file, setFile] = useState(null);
+    const navigate = useNavigate();
+
+    console.log("user id: " + userLogged.id);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -18,7 +21,7 @@ export const ClubsForm = ({userLogged}) => {
         rating,
         creator_id: userLogged.id,
         };
-
+        
         try {
         const response = await axios.post('http://localhost:8080/clubs', newClub);
         const clubId = response.data.id;
@@ -35,7 +38,10 @@ export const ClubsForm = ({userLogged}) => {
             }
             });
 
+            
+
         }
+        navigate('/clubs');
         // Optionally, you can reset the form or redirect the user
         } catch (error) {
         console.error('Error creating club:', error);

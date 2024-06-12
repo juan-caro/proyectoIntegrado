@@ -21,61 +21,83 @@ export const Dashboard = () => {
   return (
     <>
         <div className="container-fluid px-4">
-            <h1 className="mt-4">¡Bienvenido a ChessTournaments!</h1>
-            <ol className="breadcrumb mb-4">
-                <li className="breadcrumb-item active">Chess Tournaments</li>
-            </ol>
-            
-            <div className="card border-primary mb-3 ">
-                <h5 className="card-header text-bg-primary">Torneos más próximos</h5>
-                <div className="card-body">
-                {tournaments.map((tournament, index) => (
-                    <p key={index} className="card-text">
-                        {tournament.name} Fecha: {new Date(tournament.dateTime).toLocaleDateString()} Hora: {new Date(tournament.dateTime).toLocaleTimeString()}
-                    </p>
-                ))}
-                </div>
-            </div>
+            <div className="card shadow-lg border-0 rounded-lg mt-5 mb-5">
+                <div className="card-header d-flex flex-column">
+                    <div className="d-flex align-items-center mt-4">
+                        <img src="src/logo.png" alt="imagen" width="100" height="100" className="rounded-circle" />
 
-            <div className="card border-success mb-3">
-                <h5 className="card-header text-bg-success">¡No olvides seguirnos en nuestras redes!</h5>
-                <div className="card-body">
-                    <div className="row">
-                        <div className="col">
-                            <h5>Twitter</h5>
+                        <h1>¡Bienvenido a ChessTournaments!</h1>
+                    </div>
+                    <ol className="breadcrumb mb-4" style={{ marginLeft: 'calc(100px + 1rem)'}}>
+                        <li className="breadcrumb-item active">Chess Tournaments</li>
+                    </ol>
+                </div>
+                <div className="d-flex justify-content-center mt-3">
+                    <div className="card border-primary mb-3 float-center" style={{ width: '800px' }}>
+                        <h5 className="card-header text-bg-primary">Torneos más próximos</h5>
+                        <div className="card-body">
+                        {tournaments.map((tournament, index) => (
+                            <p key={index} className="card-text">
+                              <strong> Torneo:</strong> {tournament.name} 
+                              <strong className="ms-3"> Fecha:</strong> {new Date(tournament.dateTime).toLocaleDateString()} 
+                              <strong className="ms-3">Hora:</strong> {new Date(tournament.dateTime).toLocaleTimeString()}
+                            </p>
+                        ))}
                         </div>
-                        <div className="col">
-                            <h5>Instagram</h5>
+                    </div>
+                </div>
+                
+                <div className="d-flex justify-content-center mt-3">
+                    <div className="card border-success mb-3" style={{ width: '800px' }}>
+                        <h5 className="card-header text-bg-success">¡No olvides seguirnos en nuestras redes!</h5>
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col d-flex">
+                                    <i className="fa-brands fa-twitter me-2 mt-1"></i>
+                                    <a href="https://www.x.com" target="_blank">
+                                        <h5 className="ml-2">Twitter</h5>
+                                    </a>
+                                </div>
+                                <div className="col d-flex">
+                                    <i className="fa-brands fa-square-instagram me-2 mt-1"></i>
+                                    <a href="https://www.instagram.com" target="_blank">
+                                        <h5>Instagram</h5>
+                                    </a>
+                                </div>
+                                <div className="col d-flex">
+                                    <i className="fa-brands fa-tiktok me-2 mt-1"></i>
+                                    <a href="https://www.tiktok.com" target="_blank">
+                                        <h5>Tik Tok</h5>
+                                    </a>
+                                </div>
+                                <div className="col d-flex">
+                                    <i className="fa-brands fa-square-threads me-2 mt-1"></i>
+                                    <a href="https://www.threads.net" target="_blank">
+                                        <h5>Threads</h5>
+                                    </a>
+                                </div>
+                                
+                            </div>
                         </div>
-                        <div className="col">
-                            <h5>Tik Tok</h5>
+                    </div>
+                </div>
+
+                <div className="d-flex justify-content-center mt-3 mb-5">
+                    <div className="card border-warning" style={{ width: '800px' }}>
+                        <h5 className="card-header text-bg-warning text-white">Sobre nosotros</h5>
+                        <div className="card-body">
+                            <h5 className="card-title">¡Conócenos!</h5>
+                            <p className="card-text">
+                                En ChessTournaments, nos dedicamos a proporcionar una plataforma intuitiva y eficiente para la gestión de torneos 
+                                y clubes de ajedrez. Nuestra aplicación está diseñada para simplificar el proceso de organización y participación 
+                                en eventos de ajedrez, ofreciendo herramientas robustas para administradores y usuarios por igual. Ya sea que estés 
+                                buscando crear, unirte o administrar torneos, ChessTournaments está aquí para hacer que tu experiencia 
+                                en el mundo del ajedrez sea más emocionante y accesible que nunca.
+                            </p>
                         </div>
-                        <div className="col">
-                            <h5>Threads</h5>
-                        </div>
-                        
                     </div>
                 </div>
             </div>
-
-            <div className="card border-warning">
-                <h5 className="card-header text-bg-warning text-white">Sobre nosotros</h5>
-                <div className="card-body">
-                    <h5 className="card-title">¡Conocenos!</h5>
-                    <p className="card-text">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
-                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
-                        sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
-                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, 
-                        sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
-                        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
-                        nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate 
-                        velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-                        </p>
-                </div>
-            </div>
-            
         </div>
     </>
   )

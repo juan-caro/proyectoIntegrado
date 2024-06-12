@@ -15,6 +15,7 @@ import { LayoutTorneosCreator } from "../components/layouts/users/LayoutTorneosC
 import { LayoutPlatformIndex } from "../components/layouts/plataformas/LayoutPlatformIndex"
 import { LayoutPlatformForm } from "../components/layouts/plataformas/LayoutPlatformForm"
 import { LayoutUserProfileForm } from "../components/layouts/users/LayoutUserProfileForm"
+import { LayoutTorneosEdit } from "../components/layouts/torneos/LayoutTorneosEdit"
 
 export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, setUserLogged}) => {
     
@@ -38,6 +39,7 @@ export const RoutesApp = ({ isLoggedIn, handleLogin, handleLogout, userLogged, s
                 <Route path="/platforms" element={ <LayoutPlatformIndex isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/platforms/create" element={ <LayoutPlatformForm isLoggedIn={isLoggedIn} userLogged={userLogged}/>} />
                 <Route path="/miperfil/edit" element={<LayoutUserProfileForm isLoggedIn={isLoggedIn} userLogged={userLogged} setUserLogged={setUserLogged} handleLogin={handleLogin} />} />
+                <Route path="/torneos/edit" element={<LayoutTorneosEdit isLoggedIn={isLoggedIn} userLogged={userLogged}/>}/>
             </Routes>
         </>
     )

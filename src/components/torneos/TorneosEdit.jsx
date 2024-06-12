@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-export const TorneosForm = ({ userLogged }) => {
-    const [name, setName] = useState('');
-    const [dateTime, setDateTime] = useState('');
-    const [format, setFormat] = useState('Bala');
-    const [state, setState] = useState('Activo');
-    const [rounds, setRounds] = useState('');
+export const TorneosEdit = ({ userLogged }) => {
+    const location = useLocation();
+    const { tournament } = location.state;
+    const [name, setName] = useState(tournament.name || '');
+    const [dateTime, setDateTime] = useState(tournament.dateTime || '');
+    const [format, setFormat] = useState(tournament.format || 'Bala');
+    const [state, setState] = useState(tournament.state || 'Activo');
+    const [rounds, setRounds] = useState(tournament.rounds || '');
     const [file, setFile] = useState(null);
     const [platforms, setPlatforms] = useState([]);
-    const [selectedPlatform, setSelectedPlatform] = useState('');
+    const [selectedPlatform, setSelectedPlatform] = useState(tournament.platform?.id || '');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,8 +31,8 @@ export const TorneosForm = ({ userLogged }) => {
 
     const showSwal = () => {
         Swal.fire({
-            title: "Torneo Creado!",
-            text: "El torneo se ha creado con éxito.",
+            title: "Torneo Actualizado!",
+            text: "El torneo se ha actualizado con éxito.",
             icon: "success"
         });
     }
@@ -38,25 +40,27 @@ export const TorneosForm = ({ userLogged }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const newTournament = {
+            const updatedTournament = {
                 name,
                 dateTime,
                 format,
                 state,
-                rounds,
-                creator_id: userLogged.id
+                rounds
             };
 
-            console.log("torneo nuevo: " + newTournament.format);
-
-            // Crear el torneo
-            const tournamentResponse = await axios.post('http://localhost:8080/tournaments', newTournament);
-            const tournamentId = tournamentResponse.data.id;
-
-            // Crear el archivo relacionado (si existe)
+            // Actualizar el torneo
+            console.log(tournament.id);
+            try{
+                console.log(updatedTournament);
+            const response = await axios.put(`http://localhost:8080/tournaments/${tournament.id}`, updatedTournament);
+            console.log("response: " + response.data);
+            }catch(error){
+                console.error('error al enviar la solicitud: ' + error);
+            }
+            // Subir el archivo relacionado (si existe)
             if (file) {
                 const formData = new FormData();
-                formData.append('id', tournamentId);
+                formData.append('id', tournament.id);
                 formData.append('file', file);
 
                 await axios.put('http://localhost:8080/tournaments/photo', formData, {
@@ -66,28 +70,11 @@ export const TorneosForm = ({ userLogged }) => {
                 });
             }
 
-            // Crear el Game relacionado
-            const newGame = {
-                gameDurationInSeconds: 0, // Cambia esto según tus necesidades
-                platform: { id: selectedPlatform },
-                tournament: { id: tournamentId }
-            };
-
-            await axios.post('http://localhost:8080/games', newGame);
-
-            // Resetear el formulario
-            setName('');
-            setDateTime('');
-            setFormat('');
-            setState('');
-            setRounds('');
-            setFile(null);
-            setSelectedPlatform('');
             showSwal();
 
             navigate('/torneos');
         } catch (error) {
-            console.error('Error adding tournament:', error);
+            console.error('Error updating tournament:', error);
         }
     };
 
@@ -100,7 +87,7 @@ export const TorneosForm = ({ userLogged }) => {
             <div className="col-lg-7">
                 <div className="card shadow-lg border-0 rounded-lg mt-5">
                     <div className="card-header">
-                        <h4 className="text-center font-weight-light my-4">Crear un Nuevo Torneo</h4>
+                        <h4 className="text-center font-weight-light my-4">Editar Torneo</h4>
                     </div>
                     <div className="card-body">
                         <form onSubmit={handleSubmit}>
@@ -181,26 +168,8 @@ export const TorneosForm = ({ userLogged }) => {
                                     />
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="mb-3 col-md-6">
-                                    <label htmlFor="platform" className="form-label">Plataforma</label>
-                                    <select
-                                        className="form-select"
-                                        id="platform"
-                                        value={selectedPlatform}
-                                        onChange={(e) => setSelectedPlatform(e.target.value)}
-                                        required
-                                    >
-                                        <option value="">Seleccione una plataforma</option>
-                                        {platforms.map(platform => (
-                                            <option key={platform.id} value={platform.id}>
-                                                {platform.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" className="btn btn-primary">Añadir Torneo</button>
+                            
+                            <button type="submit" className="btn btn-primary">Actualizar Torneo</button>
                         </form>
                     </div>
                 </div>

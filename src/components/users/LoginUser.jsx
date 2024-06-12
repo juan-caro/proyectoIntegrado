@@ -9,7 +9,7 @@ export const LoginUser = ({ handleLogin, setUserLogged }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
-  window.location.reload()
+  
 
   // Función para cifrar una contraseña
   const encryptPassword = (password) => {

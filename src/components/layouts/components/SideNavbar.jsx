@@ -12,7 +12,7 @@ export const SideNavbar = ({isLoggedIn, userLogged}) => {
           <div className="sb-nav-link-icon"><i className="fa-solid fa-house"></i></div>
           Página Principal
         </Link>
-        <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-gamepad me-2"></i>Torneos</div>
+        <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-trophy me-2"></i>Torneos</div>
         <Link className="nav-link" to={{ pathname: '/torneos'}}>
           <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
           Lista de torneos
@@ -34,22 +34,22 @@ export const SideNavbar = ({isLoggedIn, userLogged}) => {
           <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
           Torneos Organizados
         </Link>
-        <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-person me-2"></i>Clubs</div>
+        <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-people-group me-2"></i>Clubs</div>
         <Link className="nav-link" to={{ pathname: '/clubs'}}>
-          <div className="sb-nav-link-icon"><i className="fa-solid fa-id-card"></i></div>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
           Lista de clubs
         </Link>
         <Link className="nav-link" to={{ pathname: '/clubs/create'}}>
-          <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-plus"></i></div>
           Fundar un nuevo club
         </Link>
-        <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-person me-2"></i>Plataformas</div>
+        <div className="sb-sidenav-menu-heading"><i className="fa-solid fa-gamepad me-2"></i>Plataformas</div>
         <Link className="nav-link" to={{ pathname: '/platforms'}}>
-          <div className="sb-nav-link-icon"><i className="fa-solid fa-id-card"></i></div>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
           Plataformas existentes
         </Link>
         <Link className="nav-link" to={{ pathname: '/platforms/create'}}>
-          <div className="sb-nav-link-icon"><i className="fa-solid fa-list-ul"></i></div>
+          <div className="sb-nav-link-icon"><i className="fa-solid fa-registered"></i></div>
           Registrar plataforma
         </Link>
       </div>
