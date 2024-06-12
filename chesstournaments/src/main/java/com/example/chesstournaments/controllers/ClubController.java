@@ -3,6 +3,7 @@ package com.example.chesstournaments.controllers;
 import com.example.chesstournaments.models.User;
 import com.example.chesstournaments.repository.ClubRepo;
 import com.example.chesstournaments.repository.UserRepo;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import com.example.chesstournaments.models.Club;
 import org.springframework.data.domain.Page;
@@ -25,9 +26,10 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequestMapping("/clubs")
 @RequiredArgsConstructor
 public class ClubController {
-    public static final String PHOTO_DIRECTORY =  "C:\\Users\\Morius\\OneDrive\\Documentos\\Springboot\\chesstournaments\\clubs\\image\\";
+    public static final String PHOTO_DIRECTORY =  "C:\\Users\\johnm\\OneDrive\\Documentos\\Springboot\\chesstournaments\\clubs\\image\\";
     private final ClubService clubService;
     private final UserRepo userRepository;
+    private final ClubRepo clubRepo;
 
     @PostMapping
     public ResponseEntity<Club> createClub(@RequestBody Map<String, Object> payload) {
@@ -35,11 +37,13 @@ public class ClubController {
         String description = (String) payload.get("description");
         String iconUrl = (String) payload.get("iconUrl");
         String creatorId = (String) payload.get("creator_id");
+        System.out.println("creator id" + creatorId);
 
         // Obtener el usuario creador del club
 
         User creator = userRepository.findById(creatorId).orElse(null);
 
+        System.out.println("creator only " +creator);
         // Crear una nueva instancia de Club
         Club club = new Club();
         club.setName(name);
@@ -99,6 +103,35 @@ public class ClubController {
         boolean isMember = clubService.isUserMemberOfClub(clubId, userId);
         System.out.println("isMember: " + isMember);
         return new ResponseEntity<>(isMember, HttpStatus.OK);
+    }
+
+    @GetMapping("/creator")
+    public ResponseEntity<User> getCreatorOfClub(@RequestParam String clubId){
+        Club club = clubService.getClub(clubId);
+
+        return new ResponseEntity<>(club.getCreator(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClub(@PathVariable String id) {
+        try {
+            Club club = clubService.getClub(id);
+            User user = userRepository.findUserById(club.getCreator().getId());
+            System.out.println("CLUB: " + club);
+            for (User u : club.getMembers()){
+                u.setClub(null);
+            }
+            club.getMembers().clear();
+            club.setCreator(null);
+
+            clubRepo.save(club);
+            user.setCreatedClub(null);
+            userRepository.save(user);
+            clubService.deleteClub(club);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

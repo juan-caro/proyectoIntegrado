@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.ArrayList;
@@ -37,12 +39,26 @@ public class Club {
     @Column(name = "iconUrl")
     private String iconUrl;
 
-    @OneToMany(mappedBy = "club")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "club", cascade = CascadeType.DETACH, orphanRemoval = true)
+    @JsonManagedReference("user-club")
     private List<User> members = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = true)
     @JsonBackReference("user-createdClub")
     private User creator;
+
+    @Override
+    public String toString() {
+        return "Club{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", rating=" + rating +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", members=" + members + // esto imprimirá una lista de usuarios, considera cómo quieres que se impriman los usuarios
+                ", creator=" + (creator != null ? creator.getUsername() : "null") + // suponer que User tiene un método getUsername()
+                '}';
+    }
+
 }

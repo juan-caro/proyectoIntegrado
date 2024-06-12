@@ -1,5 +1,8 @@
 package com.example.chesstournaments.services;
 
+import com.example.chesstournaments.exceptions.CustomNotFoundException;
+import com.example.chesstournaments.models.Game;
+import com.example.chesstournaments.repository.GameRepo;
 import com.example.chesstournaments.repository.UserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -30,6 +34,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 public class TournamentService {
     private final TournamentRepo tournamentRepo;
     private final UserRepo userRepo;
+    private final GameRepo gameRepo;
 
     public Page<Tournament> getAllTournaments(int page, int size){
         return tournamentRepo.findAll(PageRequest.of(page, size, Sort.by("name")));
@@ -94,6 +99,16 @@ public class TournamentService {
         return tournamentRepo.findByCreatorId(userId);
     }
     public List<Tournament> getRecentTournaments() {
-        return tournamentRepo.findTop3ByOrderByDateTimeDesc();
+        return tournamentRepo.findTop3ActiveTournamentsOrderByDateTimeDesc("Activo");
+    }
+
+    public Tournament updateTournament(String id, String name, LocalDateTime dateTime, String format, String state, Long rounds, String platformId) {
+        Tournament tournament = tournamentRepo.findById(id).orElseThrow(() -> new CustomNotFoundException("Tournament not found"));
+        tournament.setName(name);
+        tournament.setDateTime(dateTime);
+        tournament.setFormat(format);
+        tournament.setState(state);
+        tournament.setRounds(rounds);
+        return tournamentRepo.save(tournament);
     }
 }

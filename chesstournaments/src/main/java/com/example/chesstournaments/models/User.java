@@ -3,6 +3,7 @@ package com.example.chesstournaments.models;
  * @author: Juan Cabello Rodríguez
  * */
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -53,10 +54,12 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "club_id")
-    @JsonBackReference
+    @JsonBackReference("user-club")
+
     private Club club;
     @OneToOne(mappedBy = "creator", cascade = CascadeType.ALL)
     @JsonManagedReference("user-createdClub")
+    @JsonIgnore
     private Club createdClub;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference("user-participations")

@@ -45,9 +45,23 @@ public class ClubService {
         return clubRepo.save(club);
     }
 
-    public void deleteClub(Club club){
-        clubRepo.delete(club);
+    public void deleteClub(Club club) {
+        try {
+            // Verificar si el club existe antes de eliminarlo
+            Optional<Club> existingClub = clubRepo.findById(club.getId());
+            if (existingClub.isPresent()) {
+                clubRepo.deleteById(club.getId());
+                System.out.println("Club deleted successfully: " + club);
+            } else {
+                System.out.println("Club not found: " + club);
+            }
+        } catch (Exception e) {
+            System.err.println("Error deleting club: " + club);
+            e.printStackTrace();
+            throw new RuntimeException("Error deleting club: " + e.getMessage(), e);
+        }
     }
+
 
     public String uploadPhoto(String id, MultipartFile file){
         Club club = getClub(id);
@@ -116,4 +130,5 @@ public class ClubService {
         System.out.println("matches: " + matches);
         return matches;
     }
+
 }

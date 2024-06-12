@@ -1,8 +1,12 @@
 package com.example.chesstournaments.controllers;
 
+import com.example.chesstournaments.dto.TournamentDTO;
 import com.example.chesstournaments.exceptions.CustomNotFoundException;
 import com.example.chesstournaments.models.User;
 import com.example.chesstournaments.repository.UserRepo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import lombok.RequiredArgsConstructor;
 import com.example.chesstournaments.models.Tournament;
 import org.springframework.data.domain.Page;
@@ -27,7 +31,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequestMapping("/tournaments")
 @RequiredArgsConstructor
 public class TournamentController {
-    public static final String PHOTO_DIRECTORY =  "C:\\Users\\Morius\\OneDrive\\Documentos\\Springboot\\chesstournaments\\tournaments\\image\\";
+    public static final String PHOTO_DIRECTORY =  "C:\\Users\\johnm\\OneDrive\\Documentos\\Springboot\\chesstournaments\\tournaments\\image\\";
     private final TournamentService tournamentService;
     private final UserRepo userRepository;
 
@@ -103,5 +107,15 @@ public class TournamentController {
     public ResponseEntity<Void> deleteTournament(@RequestParam String tournamentId) {
         tournamentService.deleteTournament(tournamentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Tournament> updateTournament(@PathVariable String id, @RequestBody TournamentDTO torneo) {
+        System.out.println("entro");
+
+        System.out.println("datos recibidos, updateo");
+        Tournament updatedTournament = tournamentService.updateTournament(id, torneo.getName(), torneo.getDateTime(), torneo.getFormat(), torneo.getState(), torneo.getRounds(), torneo.getPlataformId());
+        System.out.println("updateado, devuelvo respuesta");
+        return ResponseEntity.ok().body(updatedTournament);
     }
 }
