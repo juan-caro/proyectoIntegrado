@@ -62,6 +62,7 @@ const buttonTemplate = (rowData) => {
                         <Column field="format" header="Formato" sortable style={{ width: '15%' }}></Column>
                         <Column field="state" header="Estado" sortable style={{ width: '15%' }}></Column>
                         <Column field="rounds" header="Rondas" sortable style={{ width: '15%' }}></Column>
+                        <Column field="participantCount" header="Participantes" sortable style={{ width: '15%' }}></Column>
                         <Column header="Acciones" body={buttonTemplate} style={{ width: '15%' }}></Column>
                     </DataTable>
                 </div>

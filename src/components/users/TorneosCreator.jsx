@@ -108,13 +108,14 @@ const buttonTemplate = (rowData) => {
                 </div>
                 <div className="card-body">
                 <DataTable value={tournaments} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} stripedRows tableStyle={{ minWidth: '50rem' }} locale="es">
-                    <Column field="name" header="Nombre" sortable style={{ width: '15%' }}></Column>
-                    <Column field="dateTime" header="Fecha y Hora" sortable style={{ width: '15%' }} body={(rowData) => (
+                    <Column field="name" header="Nombre" sortable style={{ width: '10%' }}></Column>
+                    <Column field="dateTime" header="Fecha y Hora" sortable style={{ width: '10%' }} body={(rowData) => (
                         <span>{new Date(rowData.dateTime).toLocaleString()}</span>
                     )}></Column>
-                    <Column field="format" header="Formato" sortable style={{ width: '15%' }}></Column>
-                    <Column field="state" header="Estado" sortable style={{ width: '15%' }}></Column>
-                    <Column field="rounds" header="Rondas" sortable style={{ width: '15%' }}></Column>
+                    <Column field="format" header="Formato" sortable style={{ width: '10%' }}></Column>
+                    <Column field="state" header="Estado" sortable style={{ width: '10%' }}></Column>
+                    <Column field="rounds" header="Rondas" sortable style={{ width: '10%' }}></Column>
+                    <Column field="participantCount" header="Participantes" sortable style={{ width: '10%' }}></Column>
                     <Column header="Acciones" body={buttonTemplate} style={{ width: '20%' }}></Column>
                 </DataTable>                </div>
             </div>

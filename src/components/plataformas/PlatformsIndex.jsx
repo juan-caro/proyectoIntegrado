@@ -26,6 +26,13 @@ export const PlatformsIndex = () => {
     }, [page, size]);
     console.log(platforms);
 
+    useEffect(() => {
+        platforms.map((platform, index) => {
+            console.log(`Platform ${index + 1} face_to_face: ${platform.faceToFace}`);
+            return null; // Necesario para evitar un warning en React
+        });
+    }, [platforms]);
+
     const handlePreviousPage = () => {
         if (page > 0) {
             setPage(page - 1);
@@ -70,46 +77,10 @@ export const PlatformsIndex = () => {
                 <DataTable value={platforms} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} stripedRows tableStyle={{ minWidth: '50rem' }} locale="es">
                         <Column field="name" header="Nombre" sortable style={{ width: '15%' }}></Column>
                         <Column field="platform" header="Tipo" style={{ width: '15%' }} body={(rowData) => (
-                            <span>{rowData.face_to_face ? 'Presencial' : 'En línea'}</span>
+                            <span>{rowData.faceToFace ? 'Presencial' : 'En línea'}</span>
                         )} sortable></Column>
                         <Column header="Web" body={buttonTemplate} style={{ width: '15%' }}></Column>
                     </DataTable>
-                    <table id="datatablesSimple" className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Tipo</th>
-                                <th>Sitio Web</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {platforms.length === 0 ? (
-                                <tr>
-                                    <td colSpan="6">No hay plataformas registradas actualmente.</td>
-                                </tr>
-                            ) : (
-                                platforms.map(platform => (
-                                    <tr key={platform.id}>
-                                        <td>{platform.name}</td>
-                                        <td>{platform.face_to_face ? 'Presencial' : 'En línea'}</td>
-                                        <td>
-                                            <a href={platform.platformUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                                                Web
-                                            </a>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Tipo</th>
-                                <th>Sitio Web</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-
                 </div>
             </div>
         </div>  

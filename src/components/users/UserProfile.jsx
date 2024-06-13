@@ -32,7 +32,7 @@ export const UserProfile = ({ userLogged, handleLogin }) => {
     fetchChessProfile();
 }, [userLogged.hasChessComProfile, userLogged.chessComProfile]);
 
-  console.log(userLogged);
+  console.log("chesscomprofile: " + (userLogged.chessComProfile));
   
   const handleEdit = () => {
     navigate('/miperfil/edit');
@@ -86,7 +86,7 @@ const getLastGameUrl = (stats) => {
               <p className='me-3'><strong>Email:</strong> {userLogged.email}</p>
               <p><strong>Elo:</strong> {userLogged.elo}</p>
             </div>
-            {userLogged.hasChessComProfile && chessStats && (
+            {userLogged.hasChessComProfile && userLogged.chessComProfile !== null && chessStats && (
                   <>
                       <h6>Datos Chess.com</h6>
                       <div className="col d-flex align-items-center">

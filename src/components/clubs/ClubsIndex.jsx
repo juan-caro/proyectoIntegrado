@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 
 export const ClubsIndex = () => {
   const [clubs, setClubs] = useState([]);
@@ -22,8 +24,27 @@ export const ClubsIndex = () => {
     }
   };
 
-  const handleDetails = (club) => {
-    navigate('/clubs/details', { state: { club } });
+  const handleDetails = (clubId) => {
+    navigate(`/clubs/details`, { state: { clubId} });
+};
+
+const buttonTemplate = (rowData) => {
+    console.log(rowData.membersCount);
+    return (
+        
+        <button
+            className="btn btn-primary btn-sm"
+            onClick={() => handleDetails(rowData.id)}
+        >
+            Ver detalles
+        </button>
+    );
+
+    
+};
+
+const membersCountTemplate = (rowData) => {
+    return rowData.members ? rowData.members.length : 0;
 };
 
   return (
@@ -40,49 +61,13 @@ export const ClubsIndex = () => {
                     Clubs
                 </div>
                 <div className="card-body">
-                    <table id="datatablesSimple" className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripción</th>
-                                <th>Rating</th>
-                                <th className="d-flex justify-content-end">Ver detalles</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {!clubs || clubs.length === 0 ? (
-                                <tr>
-                                    <td colSpan="4">Actualmente no hay clubs fundados.</td>
-                                </tr>
-                            ) : (
-                                clubs.map(club => (
-                                    <tr key={club.id}>
-                                        <td>{club.name}</td>
-                                        <td>{club.description}</td>
-                                        <td>{club.rating}</td>
-                                        <td>
-                                            <button
-                                                className="btn btn-primary btn-sm d-flex float-end"
-                                                onClick={() => handleDetails(club)}
-                                            >
-                                                Ver detalles
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripción</th>
-                                <th>Rating</th>
-                                <th className="d-flex justify-content-end">Ver detalles</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-
+                    <DataTable value={clubs} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} stripedRows tableStyle={{ minWidth: '50rem' }} locale="es">
+                        <Column field="name" header="Nombre" sortable style={{ width: '15%' }}></Column>
+                        <Column field="description" header="Descripción" sortable style={{ width: '15%' }}></Column>
+                        <Column header="Nº Miembros" body={membersCountTemplate} sortable style={{ width: '15%' }}></Column>
+                        <Column header="Detalles" body={buttonTemplate} style={{ width: '15%' }}></Column>
+                    </DataTable>
+                   
                 </div>
             </div>
         </div>  

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export const LayoutTorneosUser = ({ isLoggedIn, userLogged }) => {
 
     const navigate = useNavigate();
-
+    console.log("loggedin: "+ isLoggedIn);
     useEffect(() => {
         if (!isLoggedIn) {
           navigate('/login');

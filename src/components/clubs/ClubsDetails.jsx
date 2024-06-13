@@ -1,21 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-export const ClubsDetails = ({ club, user, isLoggedIn }) => {
+export const ClubsDetails = ({ user, isLoggedIn }) => {
+    const { state } = useLocation();
+    const { clubId } = state; // Obtener clubId de los parámetros de la URL
+    const [club, setClub] = useState(null);
     const [creator, setCreator] = useState(null);
     const [isMember, setIsMember] = useState(false);
+    const [hasVoted, setHasVoted] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    console.log(clubId);
+
     useEffect(() => {
         const fetchClubDetails = async () => {
             try {
+                const response = await axios.get(`http://localhost:8080/clubs/${clubId}`);
+                setClub(response.data);
+            } catch (error) {
+                setError('Error fetching club details');
+            }
+        };
+
+        const fetchIsMember = async () => {
+            try {
                 const isMemberResponse = await axios.get(`http://localhost:8080/clubs/isMember`, {
                     params: { 
-                        clubId: club.id,
+                        clubId: clubId,
                         userId: user.id
                      }
                 });
@@ -28,10 +44,10 @@ export const ClubsDetails = ({ club, user, isLoggedIn }) => {
         const fetchCreator = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/clubs/creator`, {
-                    params: { clubId: club.id }
+                    params: { clubId }
                 });
                 setCreator(response.data);
-            } catch (err) {
+            } catch (error) {
                 setError('Error fetching club creator');
             }
         };
@@ -39,16 +55,34 @@ export const ClubsDetails = ({ club, user, isLoggedIn }) => {
         const fetchData = async () => {
             setLoading(true);
             await fetchClubDetails();
+            await fetchIsMember();
             await fetchCreator();
             setLoading(false);
         };
 
         fetchData();
-    }, [club.id, user.id]);
+    }, [clubId, user.id]);
+
+    useEffect(() => {
+        const checkIfUserVoted = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/users/${user.id}/votedClubs`);
+                const votedClubs = response.data;
+                const hasVotedInThisClub = votedClubs.some(vc => vc.id === clubId);
+                setHasVoted(hasVotedInThisClub);
+            } catch (error) {
+                setError('Error checking if user voted');
+            }
+        };
+
+        if (isLoggedIn && user.id) {
+            checkIfUserVoted();
+        }
+    }, [clubId, user.id, isLoggedIn]);
 
     const handleJoin = async () => {
         try {
-            await axios.post(`http://localhost:8080/clubs/${club.id}/join`, null, { params: { userId: user.id } });
+            await axios.post(`http://localhost:8080/clubs/${clubId}/join`, null, { params: { userId: user.id } });
             setIsMember(true);
         } catch (error) {
             setError('Error joining the club');
@@ -57,10 +91,26 @@ export const ClubsDetails = ({ club, user, isLoggedIn }) => {
 
     const handleLeave = async () => {
         try {
-            await axios.post(`http://localhost:8080/clubs/${club.id}/leave`, null, { params: { userId: user.id } });
+            await axios.post(`http://localhost:8080/clubs/${clubId}/leave`, null, { params: { userId: user.id } });
             setIsMember(false);
         } catch (error) {
             setError('Error leaving the club');
+        }
+    };
+
+    const handleVote = async () => {
+        try {
+            await axios.post(`http://localhost:8080/clubs/${clubId}/vote`, null, { params: { userId: user.id } });
+            setHasVoted(true);
+            Swal.fire({
+                icon: 'success',
+                title: '¡Votación realizada!',
+                text: 'Gracias por tu voto.',
+            }).then(() => {
+                window.location.reload();
+            });
+        } catch (error) {
+            setError('Error al votar: ' + error);
         }
     };
 
@@ -78,7 +128,7 @@ export const ClubsDetails = ({ club, user, isLoggedIn }) => {
 
         if (confirmed.isConfirmed) {
             try {
-                const response = await axios.delete(`http://localhost:8080/clubs/${club.id}`);
+                const response = await axios.delete(`http://localhost:8080/clubs/${clubId}`);
                 console.log(response);
                 navigate('/clubs');
             } catch (error) {
@@ -89,6 +139,7 @@ export const ClubsDetails = ({ club, user, isLoggedIn }) => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
+    console.log("rating: " + club.rating);
 
     return (
         <div className='container' style={{ maxWidth: '80%' }}>
@@ -109,35 +160,34 @@ export const ClubsDetails = ({ club, user, isLoggedIn }) => {
                 <div className="card-body">
                     <div className='row'>
                         <div className="col d-flex flex-column align-items-start">
+                            
                             <div className='d-flex'>
-                                <p className='me-3'><strong>Descripción:</strong> {club.description}</p>
-                                <p className='me-3'><strong>Rating:</strong> {club.rating}</p>
+                                <p className='me-3'><strong>Rating:</strong> {club.rating === undefined ? '0' : club.rating}</p>
+                                
                                 {creator && (
                                     <p className='me-3'><strong>Creador:</strong> {creator.username}</p>
                                 )}
                             </div>
-                            
+                            <p className='me-3'><strong>Descripción:</strong> {club.description}</p>
                         </div>
                         <div className='d-flex justify-content-between align-items-center'>
-                                {isLoggedIn ? (
-                                    isMember ? (
+                            {isLoggedIn ? (
+                                isMember ? (
+                                    <>
                                         <button className="btn btn-sm btn-danger" onClick={handleLeave}>Dejar el Club</button>
-                                    ) : (
-                                        <button className="btn btn-sm btn-primary" onClick={handleJoin}>Unirse al Club</button>
-                                    )
+                                        {!hasVoted && <button className="btn btn-sm btn-primary ms-2" onClick={handleVote}>Votar</button>}
+                                    </>
                                 ) : (
-                                    <p>Para ser miembro del club, por favor <Link to="/login">inicie sesión.</Link></p>
-                                )}
-                                {creator && creator.id === user.id ? (
-                                    <button className="btn btn-sm btn-danger ms-auto" onClick={handleDelete}>Eliminar el Club</button>
-                                ) : null}
-                            </div>
+                                    <button className="btn btn-sm btn-primary" onClick={handleJoin}>Unirse al Club</button>
+                                )
+                            ) : (
+                                <p>Para ser miembro del club, por favor <Link to="/login">inicie sesión.</Link></p>
+                            )}
+                            {creator && creator.id === user.id ? (
+                                <button className="btn btn-sm btn-danger ms-auto" onClick={handleDelete}>Eliminar el Club</button>
+                            ) : null}
+                        </div>
                     </div>
-                </div>
-                <div className='card-footer'>
-                    <Link className="btn btn-primary btn-sm float-end" to={{ pathname: `/clubs/${club.id}/edit` }}>
-                        Editar club
-                    </Link>
                 </div>
             </div>
         </div>
