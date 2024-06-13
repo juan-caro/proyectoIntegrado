@@ -3,6 +3,7 @@ package com.example.chesstournaments.services;
 import com.example.chesstournaments.models.Tournament;
 import com.example.chesstournaments.models.User;
 import com.example.chesstournaments.repository.UserRepo;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -129,6 +130,39 @@ public class ClubService {
         }
         System.out.println("matches: " + matches);
         return matches;
+    }
+
+    @Transactional
+    public void voteForClub(String clubId, String userId) {
+        System.out.println("busco el club");
+        Club club = clubRepo.findById(clubId)
+                .orElseThrow(() -> new EntityNotFoundException("Club not found with id: " + clubId));
+        System.out.println("club encontrado");
+        System.out.println("busco el user");
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        System.out.println("user encontrado");
+
+        // Aquí puedes implementar la lógica para registrar el voto del usuario en el club
+        // Por ejemplo, podrías tener una lista de usuarios que han votado en el club
+        // y agregar el usuario actual a esa lista
+
+        // Ejemplo de lógica simple:
+        System.out.println("rating+1");
+        if (club.getRating() != null) {
+            club.setRating(club.getRating() + 1L);
+        }else{
+            club.setRating(1L);
+        }
+        System.out.println("añado voter al club");
+        club.getVoters().add(user);
+
+        user.getVotedClubs().add(club);
+        userRepo.save(user);
+        System.out.println("voter añadido");
+        // Guardar el club actualizado en la base de datos
+        clubRepo.save(club);
+        System.out.println("voto por el club");
     }
 
 }

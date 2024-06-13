@@ -68,6 +68,16 @@ public class User {
     @JsonManagedReference("user-createdTournaments")
     private List<Tournament> createdTournaments;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_voted_clubs",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "club_id")
+    )
+    @JsonBackReference("user-votedClub")
+    private List<Club> votedClubs;
+
+
     @Override
     public String toString() {
         return "User{" +

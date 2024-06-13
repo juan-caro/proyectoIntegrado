@@ -1,5 +1,6 @@
 package com.example.chesstournaments.controllers;
 
+import com.example.chesstournaments.models.Club;
 import lombok.RequiredArgsConstructor;
 import com.example.chesstournaments.models.User;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
@@ -60,5 +62,11 @@ public class UserController {
     @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
     public byte[] getPhoto(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
+    }
+
+    @GetMapping("/{userId}/votedClubs")
+    public ResponseEntity<List<Club>> getVotedClubsByUser(@PathVariable String userId) {
+        List<Club> votedClubs = userService.getVotedClubsByUser(userId);
+        return ResponseEntity.ok(votedClubs);
     }
 }

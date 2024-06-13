@@ -3,11 +3,9 @@ package com.example.chesstournaments.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UuidGenerator;
@@ -17,6 +15,7 @@ import java.util.List;
 /**
  * @author: Juan Cabello Rodríguez
  * */
+@Builder
 @Entity
 @Getter
 @Setter
@@ -35,18 +34,29 @@ public class Club {
     @Column(name = "description")
     private String description;
     @Column(name = "rating")
-    private Long rating;
+    @Builder.Default
+    private Long rating = 0L;
     @Column(name = "iconUrl")
     private String iconUrl;
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.DETACH, orphanRemoval = true)
     @JsonManagedReference("user-club")
-    private List<User> members = new ArrayList<>();
+    private List<User> members;
+
+    @ManyToMany(mappedBy = "votedClubs")
+    @JsonBackReference("user-votedClub")
+    private List<User> voters = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = true)
     @JsonBackReference("user-createdClub")
     private User creator;
+
+    @Transient
+    @JsonProperty("membersCount")
+    public int getMembersCount() {
+        return members != null ? members.size() : 0;
+    }
 
     @Override
     public String toString() {
@@ -60,5 +70,7 @@ public class Club {
                 ", creator=" + (creator != null ? creator.getUsername() : "null") + // suponer que User tiene un método getUsername()
                 '}';
     }
+
+
 
 }

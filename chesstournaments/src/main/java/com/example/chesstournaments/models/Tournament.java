@@ -1,19 +1,23 @@
 package com.example.chesstournaments.models;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
  * @author: Juan Cabello Rodríguez
  * */
+@Builder
 @Entity
 @Getter
 @Setter
@@ -41,7 +45,8 @@ public class Tournament {
 
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Participation> participations;
+    @Builder.Default
+    private List<Participation> participations = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = true)
@@ -51,4 +56,19 @@ public class Tournament {
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
     @JsonBackReference("tournament-games")
     private List<Game> games;
+
+   public int getParticipantCount() {
+        int numParticipations = 0;
+        if(participations.size()>=1){
+            numParticipations = participations.size();
+        }
+        return numParticipations;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("participantCount", getParticipantCount());
+        return additionalProperties;
+    }
 }

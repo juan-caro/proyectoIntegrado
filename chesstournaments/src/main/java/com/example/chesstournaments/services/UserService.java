@@ -1,6 +1,8 @@
 package com.example.chesstournaments.services;
 
+import com.example.chesstournaments.models.Club;
 import com.example.chesstournaments.models.Tournament;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -100,6 +103,15 @@ public class UserService {
         user.setChessComProfile(updatedUser.getChessComProfile());
         // Add other fields to update as needed
         return userRepo.save(user);
+    }
+
+    public List<Club> getVotedClubsByUser(String userId) {
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found with id: " + userId);
+        }
+
+        return user.getVotedClubs();
     }
 
 }

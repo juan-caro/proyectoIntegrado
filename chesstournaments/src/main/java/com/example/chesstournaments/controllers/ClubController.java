@@ -121,7 +121,11 @@ public class ClubController {
             for (User u : club.getMembers()){
                 u.setClub(null);
             }
+            for (User u: club.getVoters()){
+                u.getVotedClubs().remove(club);
+            }
             club.getMembers().clear();
+            club.getVoters().clear();
             club.setCreator(null);
 
             clubRepo.save(club);
@@ -133,5 +137,18 @@ public class ClubController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/{id}/vote")
+    public ResponseEntity<String> voteForClub(@PathVariable String id, @RequestParam String userId) {
+        System.out.println("entro");
+        try {
+            clubService.voteForClub(id, userId);
+            return ResponseEntity.ok("Voted for the club successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error voting for the club: " + e.getMessage());
+        }
+    }
+
 
 }
