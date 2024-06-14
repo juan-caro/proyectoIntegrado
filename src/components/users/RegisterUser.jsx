@@ -8,6 +8,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorRegisterMessage, setErrorRegisterMessage] = useState('');
   const navigate = useNavigate();
 
   
@@ -66,6 +67,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
       
     } else {
      setPassword(decryptedPassword);
+     setErrorRegisterMessage('Ya existe una cuenta con ese nombre de usuario o email.');
       console.error(response.data);
     }
   };
@@ -100,6 +102,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
                                         <div className="form-floating mb-3 mb-md-0">
                                             <input className="form-control" id="inputPassword" type="password" placeholder="Introduzca su contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
                                             <label htmlFor="inputPassword">Contraseña</label>
+                                            {errorMessage && <div className="text-danger">{errorMessage}</div>}
                                         </div>
                                     </div>
                                     <div className="col-md-6">
@@ -110,6 +113,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div className="mt-4 mb-0">
                                 
                                     <div className="d-grid"> <button type="submit" className='btn btn-primary btn-block' onClick={handleRegister}>Registrarse</button></div>
@@ -117,6 +121,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
                             </form>
                         </div>
                         <div className='card-footer'>
+                        {errorRegisterMessage && <div className="text-danger">{errorRegisterMessage}</div>}
                             ¿Ya tienes cuenta? <Link to={{ pathname: '/login'}}>Inicia sesión</Link>
                         </div>
                     </div>
