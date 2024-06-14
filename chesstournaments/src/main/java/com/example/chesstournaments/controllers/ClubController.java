@@ -1,4 +1,12 @@
 package com.example.chesstournaments.controllers;
+/**
+ * @file ClubController.java
+ * @brief Controlador para la gestión de clubes en torneos de ajedrez.
+ *
+ * Este archivo define el controlador para manejar las solicitudes relacionadas con los clubes en la aplicación de torneos de ajedrez.
+ *
+ * @autor Juan Cabello Rodriguez
+ */
 
 import com.example.chesstournaments.models.User;
 import com.example.chesstournaments.repository.ClubRepo;
@@ -22,6 +30,12 @@ import java.util.Map;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
+
+/**
+ * @brief Controlador de Clubes.
+ *
+ * Este controlador maneja las solicitudes relacionadas con los clubes en la aplicación.
+ */
 @RestController
 @RequestMapping("/clubs")
 @RequiredArgsConstructor
@@ -31,6 +45,12 @@ public class ClubController {
     private final UserRepo userRepository;
     private final ClubRepo clubRepo;
 
+    /**
+     * @brief Crea un nuevo club.
+     *
+     * @param payload Map con los datos del club a crear (nombre, descripción, URL del icono, ID del creador).
+     * @return ResponseEntity con el club creado y el código de estado 201 (Created).
+     */
     @PostMapping
     public ResponseEntity<Club> createClub(@RequestBody Map<String, Object> payload) {
         String name = (String) payload.get("name");
@@ -58,7 +78,13 @@ public class ClubController {
         return ResponseEntity.created(URI.create("/clubs/clubID")).body(clubService.createClub(club));
     }
 
-
+    /**
+     * @brief Obtiene todos los clubes con paginación.
+     *
+     * @param page Número de página.
+     * @param size Tamaño de la página.
+     * @return ResponseEntity con la página de clubes.
+     */
     @GetMapping
     public ResponseEntity<Page<Club>> getClubs(@RequestParam(value = "page", defaultValue = "0") int page,
                                                @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -66,22 +92,48 @@ public class ClubController {
         return ResponseEntity.ok().body(clubService.getAllClubs(page, size));
     }
 
+    /**
+     * @brief Obtiene un club por su ID.
+     *
+     * @param id ID del club.
+     * @return ResponseEntity con el club solicitado.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Club> getClub(@PathVariable(value = "id") String id) {
         return ResponseEntity.ok().body(clubService.getClub(id));
     }
 
+    /**
+     * @brief Sube una foto para un club.
+     *
+     * @param id ID del club.
+     * @param file Archivo de la foto a subir.
+     * @return ResponseEntity con la URL de la foto subida.
+     */
     @PutMapping("/photo")
     public ResponseEntity<String> uploadPhoto(@RequestParam("id") String id, @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok().body(clubService.uploadPhoto(id, file));
     }
 
-
+    /**
+     * @brief Obtiene una foto de un club.
+     *
+     * @param filename Nombre del archivo de la foto.
+     * @return Array de bytes con la foto.
+     * @throws IOException Si ocurre un error al leer el archivo.
+     */
     @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
     public byte[] getPhoto(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
     }
 
+    /**
+     * @brief Une a un usuario a un club.
+     *
+     * @param id ID del club.
+     * @param userId ID del usuario.
+     * @return ResponseEntity con el mensaje de éxito.
+     */
     @PostMapping("/{id}/join")
     public ResponseEntity<String> joinClub(@PathVariable String id, @RequestParam String userId) {
         clubService.joinClub(id, userId);
@@ -92,12 +144,26 @@ public class ClubController {
         return ResponseEntity.ok("Joined the club successfully");
     }
 
+    /**
+     * @brief Deja un club.
+     *
+     * @param id ID del club.
+     * @param userId ID del usuario.
+     * @return ResponseEntity con el mensaje de éxito.
+     */
     @PostMapping("/{id}/leave")
     public ResponseEntity<String> leaveClub(@PathVariable String id, @RequestParam String userId) {
         clubService.leaveClub(id, userId);
         return ResponseEntity.ok("Left the club successfully");
     }
 
+    /**
+     * @brief Verifica si un usuario es miembro de un club.
+     *
+     * @param clubId ID del club.
+     * @param userId ID del usuario.
+     * @return ResponseEntity con el resultado de la verificación.
+     */
     @GetMapping("/isMember")
     public ResponseEntity<Boolean> isUserMemberOfClub(@RequestParam String clubId, @RequestParam String userId) {
         boolean isMember = clubService.isUserMemberOfClub(clubId, userId);
@@ -105,6 +171,12 @@ public class ClubController {
         return new ResponseEntity<>(isMember, HttpStatus.OK);
     }
 
+    /**
+     * @brief Obtiene el creador de un club.
+     *
+     * @param clubId ID del club.
+     * @return ResponseEntity con el creador del club.
+     */
     @GetMapping("/creator")
     public ResponseEntity<User> getCreatorOfClub(@RequestParam String clubId){
         Club club = clubService.getClub(clubId);
@@ -112,6 +184,12 @@ public class ClubController {
         return new ResponseEntity<>(club.getCreator(), HttpStatus.OK);
     }
 
+    /**
+     * @brief Elimina un club.
+     *
+     * @param id ID del club.
+     * @return ResponseEntity sin contenido si se elimina correctamente, o no encontrado si no se encuentra el club.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClub(@PathVariable String id) {
         try {
@@ -138,6 +216,13 @@ public class ClubController {
         }
     }
 
+    /**
+     * @brief Vota por un club.
+     *
+     * @param id ID del club.
+     * @param userId ID del usuario.
+     * @return ResponseEntity con el mensaje de éxito o error.
+     */
     @PostMapping("/{id}/vote")
     public ResponseEntity<String> voteForClub(@PathVariable String id, @RequestParam String userId) {
         System.out.println("entro");
