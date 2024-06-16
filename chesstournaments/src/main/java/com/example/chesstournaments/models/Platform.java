@@ -11,6 +11,17 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
 
+/**
+ * Representa una plataforma de juegos utilizada para organizar torneos.
+ * Cada plataforma puede tener múltiples juegos asociados.
+ *
+ * Esta clase es una entidad JPA que se mapea a la tabla "platforms" en la base de datos.
+ * Utiliza Lombok para la generación de getters, setters, constructores y métodos equals/hashCode.
+ *
+ * Las anotaciones de Jackson se utilizan para personalizar la serialización JSON.
+ *
+ * @author Juan Cabello Rodríguez
+ */
 @Entity
 @Getter
 @Setter

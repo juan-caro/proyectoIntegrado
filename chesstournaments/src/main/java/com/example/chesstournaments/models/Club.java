@@ -13,8 +13,14 @@ import org.hibernate.annotations.UuidGenerator;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * @author: Juan Cabello Rodríguez
- * */
+ * @file Club.java
+ * @brief Clase que representa un club en el sistema.
+ *
+ * Esta clase define la estructura de un club, incluyendo sus miembros, votantes,
+ * y el usuario creador del club.
+ *
+ * @author Juan Cabello Rodríguez
+ */
 @Builder
 @Entity
 @Getter
@@ -52,12 +58,22 @@ public class Club {
     @JsonBackReference("user-createdClub")
     private User creator;
 
+    /**
+     * Método transitorio para obtener el número de miembros del club.
+     *
+     * @return Número de miembros del club.
+     */
     @Transient
     @JsonProperty("membersCount")
     public int getMembersCount() {
         return members != null ? members.size() : 0;
     }
 
+    /**
+     * Override del método toString para representar el objeto Club como una cadena.
+     *
+     * @return Representación en cadena del objeto Club.
+     */
     @Override
     public String toString() {
         return "Club{" +

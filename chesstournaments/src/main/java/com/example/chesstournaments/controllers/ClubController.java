@@ -40,7 +40,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequestMapping("/clubs")
 @RequiredArgsConstructor
 public class ClubController {
-    public static final String PHOTO_DIRECTORY =  "C:\\Users\\johnm\\OneDrive\\Documentos\\Springboot\\chesstournaments\\clubs\\image\\";
+    public static final String PHOTO_DIRECTORY =  "C:\\Users\\Morius\\OneDrive\\Documentos\\Springboot\\chesstournaments\\clubs\\image\\";
     private final ClubService clubService;
     private final UserRepo userRepository;
     private final ClubRepo clubRepo;

@@ -11,8 +11,12 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 /**
- * @author: Juan Cabello Rodríguez
- * */
+ * @file Participation.java
+ * @brief Clase que representa la participación de un usuario en un torneo.
+ *
+ * Esta clase define la estructura de la participación de un usuario en un torneo,
+ * incluyendo la fecha de inscripción, el usuario participante y el torneo al que pertenece.
+ */
 @Entity
 @Getter
 @Setter

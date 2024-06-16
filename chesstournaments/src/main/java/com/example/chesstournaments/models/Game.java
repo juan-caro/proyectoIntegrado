@@ -12,6 +12,13 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UuidGenerator;
 
+/**
+ * @file Game.java
+ * @brief Clase que representa un juego en el sistema.
+ *
+ * Esta clase define la estructura de un juego, incluyendo su duración,
+ * plataforma asociada y torneo asociado.
+ */
 @Entity
 @Getter
 @Setter
