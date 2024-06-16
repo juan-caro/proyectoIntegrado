@@ -3,13 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
         
-
+/**
+ * Componente funcional que muestra una lista de torneos y permite ver detalles de cada torneo.
+ * Utiliza PrimeReact para la tabla de datos.
+ * 
+ * @returns {JSX.Element} Componente de React que muestra la lista de torneos.
+ */
 export const TorneosIndex = () => {
   
     const [tournaments, setTournaments] = useState([]);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    /**
+     * Efecto secundario que se ejecuta al montar el componente para obtener la lista de torneos desde la API.
+     */
     useEffect(() => {
         const fetchTournaments = async () => {
             try {
@@ -27,6 +35,11 @@ export const TorneosIndex = () => {
         fetchTournaments();
     }, []);
 
+    /**
+     * Función para manejar la navegación a la página de detalles de un torneo específico.
+     * 
+     * @param {Object} tournament - Objeto que representa el torneo seleccionado.
+     */
     const handleDetails = (tournament) => {
         navigate('/torneos/details', { state: { tournament } });
     };
@@ -36,6 +49,12 @@ export const TorneosIndex = () => {
         return <div>Error fetching tournaments: {error}</div>;
     }
 
+    /**
+     * Plantilla de botón para cada fila de la tabla de torneos.
+     * 
+     * @param {Object} rowData - Datos de la fila actual de la tabla.
+     * @returns {JSX.Element} Botón para ver detalles de un torneo específico.
+     */
     const buttonTemplate = (rowData) => {
         return (
             <button

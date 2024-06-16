@@ -4,16 +4,26 @@ import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
+/**
+ * @brief Componente funcional para mostrar una lista de clubs.
+ * @returns {JSX.Element} Componente de lista de clubs.
+ */
 export const ClubsIndex = () => {
   const [clubs, setClubs] = useState([]);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const navigate = useNavigate();
 
+  /**
+     * @brief Función useEffect para cargar los clubs al inicializar o al cambiar la paginación.
+     */
   useEffect(() => {
     fetchClubs();
   }, [page, size]);
 
+  /**
+     * @brief Función asíncrona para obtener la lista de clubs desde el servidor.
+     */
   const fetchClubs = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/clubs?page=${page}&size=${size}`);
@@ -24,10 +34,19 @@ export const ClubsIndex = () => {
     }
   };
 
+  /**
+     * @brief Función para manejar la navegación a los detalles de un club específico.
+     * @param {string} clubId - ID del club para mostrar detalles.
+     */
   const handleDetails = (clubId) => {
     navigate(`/clubs/details`, { state: { clubId} });
 };
 
+/**
+     * @brief Plantilla de botón para mostrar el botón de detalles en la tabla de clubs.
+     * @param {object} rowData - Datos de la fila actual del club.
+     * @returns {JSX.Element} Botón para ver detalles del club.
+     */
 const buttonTemplate = (rowData) => {
     console.log(rowData.membersCount);
     return (
@@ -43,6 +62,11 @@ const buttonTemplate = (rowData) => {
     
 };
 
+/**
+     * @brief Plantilla para mostrar el número de miembros de un club en la tabla de clubs.
+     * @param {object} rowData - Datos de la fila actual del club.
+     * @returns {number} Número de miembros del club.
+     */
 const membersCountTemplate = (rowData) => {
     return rowData.members ? rowData.members.length : 0;
 };

@@ -2,11 +2,22 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+/**
+ * Componente funcional para mostrar el perfil de usuario y detalles relacionados con torneos de ajedrez y Chess.com.
+ * 
+ * @param {Object} userLogged - Objeto con la información del usuario loggeado.
+ * @param {Function} handleLogin - Función para manejar el inicio de sesión del usuario.
+ * @returns {JSX.Element} Componente de React que muestra los detalles del perfil del usuario.
+ */
 export const UserProfile = ({ userLogged, handleLogin }) => {
   const navigate = useNavigate();
   const [chessStats, setChessStats] = useState(null);
   const [chessProfile, setChessProfile] = useState(null);
 
+  /**
+   * Efecto secundario que se ejecuta al montar el componente para obtener las estadísticas de ajedrez y el perfil de Chess.com del usuario.
+   * Se realiza una solicitud GET a la API de Chess.com si el usuario tiene un perfil de Chess.com configurado.
+   */
   useEffect(() => {
     const fetchChessStats = async () => {
         if (userLogged.hasChessComProfile) {
@@ -34,15 +45,32 @@ export const UserProfile = ({ userLogged, handleLogin }) => {
 
   console.log("chesscomprofile: " + (userLogged.chessComProfile));
   
+  /**
+   * Función para manejar la navegación a la página de edición de perfil.
+   */
   const handleEdit = () => {
     navigate('/miperfil/edit');
 };
 
+/**
+   * Función para calcular el porcentaje de victorias basado en el número de victorias, derrotas y empates.
+   * 
+   * @param {number} wins - Número de victorias.
+   * @param {number} losses - Número de derrotas.
+   * @param {number} draws - Número de empates.
+   * @returns {string} Porcentaje de victorias formateado.
+   */
 const calculateWinrate = (wins, losses, draws) => {
   const totalGames = wins + losses + draws;
   return totalGames === 0 ? 0 : ((wins / totalGames) * 100).toFixed(2);
 };
 
+/**
+   * Función para obtener el porcentaje de victorias de un tipo de juego específico (rápido, bala, blitz).
+   * 
+   * @param {Object} stats - Estadísticas del tipo de juego.
+   * @returns {string} Porcentaje de victorias formateado.
+   */
 const getWinrate = (stats) => {
   if (!stats) {
       return 'N/A';
@@ -51,6 +79,12 @@ const getWinrate = (stats) => {
   return calculateWinrate(win, loss, draw);
 };
 
+/**
+   * Función para obtener la URL de la última partida jugada basada en las estadísticas.
+   * 
+   * @param {Object} stats - Estadísticas de ajedrez.
+   * @returns {string|null} URL de la última partida jugada o null si no está disponible.
+   */
 const getLastGameUrl = (stats) => {
   if (!stats || !stats.chess_rapid || !stats.chess_rapid.best || !stats.chess_rapid.best.game) {
       return null;

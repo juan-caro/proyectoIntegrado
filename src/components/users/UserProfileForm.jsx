@@ -3,14 +3,25 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+/**
+ * Componente funcional para permitir a los usuarios editar su perfil, incluyendo ELO, perfil de Chess.com y foto de perfil.
+ * 
+ * @param {Object} userLogged - Objeto con la información del usuario loggeado.
+ * @param {Function} setUserLogged - Función para actualizar el usuario loggeado después de editar el perfil.
+ * @param {Function} handleLogin - Función para manejar el inicio de sesión del usuario.
+ * @returns {JSX.Element} Componente de React que muestra el formulario de edición de perfil.
+ */
 export const UserProfileForm = ({ userLogged, setUserLogged, handleLogin }) => {
     const [elo, setElo] = useState('');
     const [chessprofile, setChessProfile] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const navigate = useNavigate();
 
+
+    /**
+     * Efecto secundario que se ejecuta al montar el componente para obtener los datos actuales del usuario y llenar el formulario.
+     */
     useEffect(() => {
-        // Fetch the current user data to populate the form
         const fetchUserData = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/users/${userLogged.id}`);
@@ -34,6 +45,11 @@ export const UserProfileForm = ({ userLogged, setUserLogged, handleLogin }) => {
         });
     }
 
+    /**
+     * Función para manejar el envío del formulario de edición de perfil.
+     * 
+     * @param {Event} e - Evento del formulario.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -88,6 +104,11 @@ export const UserProfileForm = ({ userLogged, setUserLogged, handleLogin }) => {
         }
     };
 
+    /**
+     * Función para manejar el cambio de archivo de la foto de perfil seleccionada.
+     * 
+     * @param {Event} e - Evento del input de archivo.
+     */
     const handleFileChange = (e) => {
         setProfilePicture(e.target.files[0]);
     };

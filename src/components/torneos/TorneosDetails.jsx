@@ -2,8 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+/**
+ * @brief Componente funcional para mostrar los detalles de un torneo y gestionar la inscripción de usuarios.
+ * @param {Object} tournament - Información del torneo a mostrar.
+ * @param {Object} user - Información del usuario actual.
+ * @param {boolean} isLoggedIn - Indica si el usuario está autenticado.
+ * @returns {JSX.Element} Componente de detalles del torneo.
+ */
 export const TorneosDetails = ({ tournament, user, isLoggedIn}) => {
     const [isRegistered, setIsRegistered] = useState(false);
+    /**
+     * @brief Efecto para verificar si el usuario está inscrito al cargar el componente.
+     */
     useEffect(() => {
         // Verificar si el usuario ya está inscrito
         const checkRegistration = async () => {
@@ -22,6 +32,9 @@ export const TorneosDetails = ({ tournament, user, isLoggedIn}) => {
         checkRegistration();
     }, [tournament.id, user.id]);
 
+    /**
+     * @brief Maneja la acción de inscripción del usuario en el torneo.
+     */
     const handleRegister = async () => {
         try {
             await axios.post('/participations/register', null, {
@@ -36,6 +49,9 @@ export const TorneosDetails = ({ tournament, user, isLoggedIn}) => {
         }
     };
 
+    /**
+     * @brief Maneja la acción de cancelar la inscripción del usuario en el torneo.
+     */
     const handleUnregister = async () => {
         try {
             await axios.delete('/participations/unregister', {
@@ -50,6 +66,10 @@ export const TorneosDetails = ({ tournament, user, isLoggedIn}) => {
         }
     };
 
+    /**
+     * @brief Renderiza los detalles del torneo y el formulario de inscripción.
+     * @returns {JSX.Element} Elemento JSX que representa los detalles del torneo.
+     */
     return (
         <div className="container">
             <h1 className="mt-4">Detalles del Torneo</h1>

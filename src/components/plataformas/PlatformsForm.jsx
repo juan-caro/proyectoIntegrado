@@ -3,12 +3,20 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * @brief Componente funcional para crear una nueva plataforma.
+ * @returns {JSX.Element} Componente de formulario de creación de plataforma.
+ */
 export const PlatformsForm = () => {
     const [name, setName] = useState('');
     const [faceToFace, setFaceToFace] = useState(false);
     const [platformUrl, setPlatformUrl] = useState('');
     const navigate = useNavigate();
 
+    /**
+     * @brief Manejador para enviar el formulario de creación de plataforma.
+     * @param {Event} e - Evento de submit del formulario.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         

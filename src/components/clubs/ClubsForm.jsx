@@ -3,6 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+/**
+ * @brief Componente funcional para crear un nuevo club.
+ * @param {object} userLogged - Usuario que está creando el club.
+ * @returns {JSX.Element} Componente de formulario para crear un club.
+ */
 export const ClubsForm = ({userLogged}) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -12,6 +17,10 @@ export const ClubsForm = ({userLogged}) => {
 
     console.log("user id: " + userLogged.id);
 
+    /**
+     * @brief Función para manejar el envío del formulario de creación de club.
+     * @param {Event} event - Evento de envío del formulario.
+     */
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -47,6 +56,10 @@ export const ClubsForm = ({userLogged}) => {
         console.error('Error creating club:', error);
         }
     };
+    /**
+     * @brief Función para manejar el cambio de archivo de icono del club.
+     * @param {Event} e - Evento de cambio de archivo de entrada.
+     */
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };

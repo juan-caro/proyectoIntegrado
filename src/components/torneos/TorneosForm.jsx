@@ -3,6 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+/**
+ * @brief Componente funcional para crear un nuevo torneo.
+ * @param {Object} userLogged - Objeto que contiene la información del usuario autenticado.
+ * @returns {JSX.Element} Componente de formulario para crear torneos.
+ */
 export const TorneosForm = ({ userLogged }) => {
     const [name, setName] = useState('');
     const [dateTime, setDateTime] = useState('');
@@ -14,6 +19,9 @@ export const TorneosForm = ({ userLogged }) => {
     const [selectedPlatform, setSelectedPlatform] = useState('');
     const navigate = useNavigate();
 
+    /**
+     * @brief Efecto para cargar las plataformas disponibles al cargar el componente.
+     */
     useEffect(() => {
         const fetchPlatforms = async () => {
             try {
@@ -35,6 +43,10 @@ export const TorneosForm = ({ userLogged }) => {
         });
     }
 
+    /**
+     * @brief Maneja la presentación del formulario para crear un nuevo torneo.
+     * @param {Event} e - Evento de envío del formulario.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -91,6 +103,10 @@ export const TorneosForm = ({ userLogged }) => {
         }
     };
 
+    /**
+     * @brief Maneja el cambio de archivo seleccionado para el icono del torneo.
+     * @param {Event} e - Evento de cambio de archivo.
+     */
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };

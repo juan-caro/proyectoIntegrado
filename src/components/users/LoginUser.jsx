@@ -21,13 +21,8 @@ export const LoginUser = ({ handleLogin, setUserLogged }) => {
     return encrypted.toString();
 };
 
-  // Función para descifrar la contraseña (si es necesario)
-  // const decryptPassword = (ciphertext) => {
-  //     const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret');
-  //     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-  //     return originalPassword;
-  // };
 
+// Manejar el evento de inicio de sesión
   const handleLoginClick = async () => {
 
     const decryptedPassword = password;

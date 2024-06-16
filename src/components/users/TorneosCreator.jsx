@@ -5,10 +5,21 @@ import Swal from "sweetalert2";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
+/**
+ * Componente funcional para mostrar los torneos organizados por un usuario.
+ * Permite ver detalles, editar y eliminar torneos.
+ * 
+ * @param {Object} userLogged - Objeto con la información del usuario loggeado.
+ * @returns {JSX.Element} Componente de React que muestra la lista de torneos organizados.
+ */
 export const TorneosCreator = ({ userLogged }) => {
   const [tournaments, setTournaments] = useState([]);
   const navigate = useNavigate();
 
+  /**
+   * Efecto secundario que se ejecuta al montar el componente para obtener los torneos del usuario.
+   * Se realiza una solicitud GET al backend para obtener los torneos organizados por el usuario.
+   */
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
@@ -24,14 +35,32 @@ export const TorneosCreator = ({ userLogged }) => {
     fetchTournaments();
   }, [userLogged.id]);
 
+  /**
+   * Manejador para redirigir a la página de detalles de un torneo.
+   * Navega a la ruta '/torneos/details' y pasa los detalles del torneo como estado.
+   * 
+   * @param {Object} tournament - Objeto con los detalles del torneo seleccionado.
+   */
   const handleDetails = (tournament) => {
     navigate('/torneos/details', { state: { tournament } });
 };
 
+/**
+   * Manejador para redirigir a la página de edición de un torneo.
+   * Navega a la ruta '/torneos/edit' y pasa los detalles del torneo como estado.
+   * 
+   * @param {Object} tournament - Objeto con los detalles del torneo seleccionado.
+   */
 const handleEdit = (tournament) => {
     navigate('/torneos/edit', { state: { tournament } });
 };
 
+/**
+   * Manejador para eliminar un torneo.
+   * Muestra un cuadro de confirmación y, si el usuario confirma, envía una solicitud DELETE al backend.
+   * 
+   * @param {Object} tournament - Objeto con los detalles del torneo seleccionado.
+   */
 const handleDelete = async (tournament) => {
     const confirmed = await Swal.fire({
         title: '¿Estás seguro?',
@@ -68,6 +97,12 @@ const handleDelete = async (tournament) => {
     }
 };
 
+/**
+   * Plantilla para renderizar los botones de acciones (ver detalles, editar, eliminar) en cada fila de la tabla.
+   * 
+   * @param {Object} rowData - Datos del torneo para el cual se renderizan los botones.
+   * @returns {JSX.Element} Botones de acciones para el torneo especificado.
+   */
 const buttonTemplate = (rowData) => {
     return (
             <div>

@@ -4,6 +4,12 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+/**
+ * @brief Componente funcional para mostrar los detalles de un club.
+ * @param {object} user - Usuario actualmente logueado.
+ * @param {boolean} isLoggedIn - Indica si el usuario está logueado.
+ * @returns {JSX.Element} Componente de detalles del club.
+ */
 export const ClubsDetails = ({ user, isLoggedIn }) => {
     const { state } = useLocation();
     const { clubId } = state; // Obtener clubId de los parámetros de la URL
@@ -17,7 +23,16 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
 
     console.log(clubId);
 
+    /**
+     * @brief Efecto secundario que se ejecuta al montar el componente o cuando cambia clubId.
+     *        Realiza las llamadas a la API para obtener detalles del club, el estado de membresía del usuario
+     *        y los detalles del creador del club.
+     */
     useEffect(() => {
+
+        /**
+         * @brief Función asíncrona para obtener los detalles del club.
+         */
         const fetchClubDetails = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/clubs/${clubId}`);
@@ -27,6 +42,9 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
             }
         };
 
+         /**
+         * @brief Función asíncrona para verificar si el usuario es miembro del club.
+         */
         const fetchIsMember = async () => {
             try {
                 const isMemberResponse = await axios.get(`http://localhost:8080/clubs/isMember`, {
@@ -41,6 +59,9 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
             }
         };
 
+        /**
+         * @brief Función asíncrona para obtener los detalles del creador del club.
+         */
         const fetchCreator = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/clubs/creator`, {
@@ -52,6 +73,9 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
             }
         };
 
+        /**
+         * @brief Función que ejecuta todas las llamadas a la API necesarias para cargar los datos del club.
+         */
         const fetchData = async () => {
             setLoading(true);
             await fetchClubDetails();
@@ -63,6 +87,10 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
         fetchData();
     }, [clubId, user.id]);
 
+    /**
+     * @brief Efecto secundario que se ejecuta cuando cambia clubId, user.id o isLoggedIn.
+     *        Verifica si el usuario ha votado por el club actual.
+     */
     useEffect(() => {
         const checkIfUserVoted = async () => {
             try {
@@ -80,6 +108,9 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
         }
     }, [clubId, user.id, isLoggedIn]);
 
+    /**
+     * @brief Manejador para unirse al club.
+     */
     const handleJoin = async () => {
         try {
             await axios.post(`http://localhost:8080/clubs/${clubId}/join`, null, { params: { userId: user.id } });
@@ -89,6 +120,9 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
         }
     };
 
+    /**
+     * @brief Manejador para dejar el club.
+     */
     const handleLeave = async () => {
         try {
             await axios.post(`http://localhost:8080/clubs/${clubId}/leave`, null, { params: { userId: user.id } });
@@ -97,6 +131,10 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
             setError('Error leaving the club');
         }
     };
+
+    /**
+     * @brief Manejador para votar por el club.
+     */
 
     const handleVote = async () => {
         try {
@@ -114,6 +152,9 @@ export const ClubsDetails = ({ user, isLoggedIn }) => {
         }
     };
 
+    /**
+     * @brief Manejador para eliminar el club.
+     */
     const handleDelete = async () => {
         const confirmed = await Swal.fire({
             title: '¿Estás seguro?',

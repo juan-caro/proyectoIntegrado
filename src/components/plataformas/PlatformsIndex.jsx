@@ -3,6 +3,10 @@ import axios from 'axios';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
+/**
+ * @brief Componente funcional para mostrar una lista paginada de plataformas.
+ * @returns {JSX.Element} Componente de lista de plataformas.
+ */
 export const PlatformsIndex = () => {
     const [platforms, setPlatforms] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -10,6 +14,9 @@ export const PlatformsIndex = () => {
     const [page, setPage] = useState(0); // Página inicial
     const [size, setSize] = useState(10); // Tamaño de la página
 
+    /**
+     * @brief Efecto para cargar las plataformas desde el servidor al montar el componente o al cambiar la paginación.
+     */
     useEffect(() => {
         const fetchPlatforms = async () => {
             try {
@@ -26,22 +33,15 @@ export const PlatformsIndex = () => {
     }, [page, size]);
     console.log(platforms);
 
+    /**
+     * @brief Efecto para realizar un registro de las plataformas en la consola al cambiar el estado de platforms.
+     */
     useEffect(() => {
         platforms.map((platform, index) => {
             console.log(`Platform ${index + 1} face_to_face: ${platform.faceToFace}`);
             return null; // Necesario para evitar un warning en React
         });
     }, [platforms]);
-
-    const handlePreviousPage = () => {
-        if (page > 0) {
-            setPage(page - 1);
-        }
-    };
-
-    const handleNextPage = () => {
-        setPage(page + 1);
-    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -51,6 +51,11 @@ export const PlatformsIndex = () => {
         return <p>Error: {error.message}</p>;
     }
 
+    /**
+     * @brief Plantilla para renderizar un botón que abre la página web de la plataforma en una nueva pestaña.
+     * @param {Object} rowData - Datos de la fila actual del DataTable.
+     * @returns {JSX.Element} Botón de enlace para la página web de la plataforma.
+     */
     const buttonTemplate = (rowData) => {
         return (
             <a href={rowData.platformUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">

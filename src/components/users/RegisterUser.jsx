@@ -20,16 +20,11 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
     });
     return encrypted.toString();
 };
-    
-    
-    // const decryptPassword = (ciphertext) => {
-    //     const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret');
-    //     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-    //     return originalPassword;
-    // };
   
+// Manejar el proceso de registro
   const handleRegister = async () => {
-    event.preventDefault();
+    event.preventDefault(); // Evitar el comportamiento por defecto del formulario
+
     if (password !== confirmPassword) {
         setErrorMessage('Las contraseñas no coinciden');
         return;
@@ -39,6 +34,7 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
       console.log(encryptedPassword);
       setPassword(encryptedPassword);
       
+      // Enviar la solicitud POST al backend para registrar al usuario
     const response = await fetch('http://localhost:8080/users', {
       method: 'POST',
       headers: {
@@ -47,8 +43,10 @@ export const RegisterUser = ({ handleLogin, setUserLogged }) => {
       body: JSON.stringify({ username, password: encryptedPassword, email })
     });
 
+    // Verificar la solicitud 
     if (response.ok) {
         console.log(password);
+        // Si el registro fue exitoso, proceder a iniciar sesión automáticamente
         const responseLogin = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
         headers: {
